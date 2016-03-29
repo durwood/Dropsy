@@ -5,43 +5,36 @@ namespace Dropsy.test
     [TestFixture]
     internal class BoxPrinterTest
     {
+        private static void AssertSizeIsCorrect(int edgeLength, string expected)
+        {
+            var testObject = new BoxPrinter();
+            var model = new BoxModel(edgeLength);
+            Assert.That(testObject.Print(model), Is.EqualTo(expected));
+        }
+
         [Test]
         public void OneByOnePrintsCorrectly()
         {
-            var testObject = new BoxPrinter();
-            var model = new BoxModel(1);
-
             var expected = "";
             expected += "┌───┐\n";
             expected += "│   │\n";
             expected += "└───┘\n";
+            expected += "  1  \n";
 
-            Assert.That(testObject.Print(model), Is.EqualTo(expected));
+            AssertSizeIsCorrect(1, expected);
         }
 
         [Test]
         public void TwoByTwoPrintsCorrectly()
         {
-            var testObject = new BoxPrinter();
-            var model = new BoxModel(2);
-
             var expected = "";
             expected += "┌──────┐\n";
             expected += "│      │\n";
             expected += "│      │\n";
             expected += "└──────┘\n";
+            expected += "  1  2  \n";
 
-            Assert.That(testObject.Print(model), Is.EqualTo(expected));
-        }
-    }
-
-    public class BoxModel
-    {
-        public readonly int EdgeLength;
-
-        public BoxModel(int edgeLength)
-        {
-            EdgeLength = edgeLength;
+            AssertSizeIsCorrect(2, expected);
         }
     }
 }

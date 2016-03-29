@@ -10,7 +10,17 @@
             for (var i = 0; i < model.EdgeLength; i++)
                 output += CreateMiddleOfBox(model);
             output += CreateBoxEnd(model, '└', '┘');
+            output += CreateLabels(model);
 
+            return output;
+        }
+
+        private string CreateLabels(BoxModel model)
+        {
+            var output = " ";
+            for (var i = 0; i < model.EdgeLength; ++i)
+                output += " " + (i + 1) + " ";
+            output += " \n";
             return output;
         }
 

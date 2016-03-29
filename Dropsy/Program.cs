@@ -7,7 +7,7 @@ namespace Dropsy
     {
         private static void Main(string[] args)
         {
-            Console.Write(new BoxPrinter().Print(new BoxModel(1)));
+            Console.Write(new BoxPrinter().Print(new BoxModel(7)));
             Console.ReadKey();
         }
     }
