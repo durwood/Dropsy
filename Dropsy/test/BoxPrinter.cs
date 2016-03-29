@@ -6,9 +6,10 @@
 
         public string Print(BoxModel model)
         {
-            var output = CreateBoxEnd(model, PrintConstants.UpperLeft, PrintConstants.UpperRight);
-            output += CreateMiddleOfBox(model);
-            output += CreateBoxEnd(model, PrintConstants.LowerLeft, PrintConstants.LowerRight);
+            var output = CreateBoxEnd(model, '┌', '┐');
+            for (var i = 0; i < model.EdgeLength; i++)
+                output += CreateMiddleOfBox(model);
+            output += CreateBoxEnd(model, '└', '┘');
 
             return output;
         }
@@ -17,17 +18,17 @@
         {
             var output = leftCorner.ToString();
             for (var i = 0; i < model.EdgeLength*SpacesPerUnit; i++)
-                output += PrintConstants.HorizontalBar;
+                output += '─';
             output += rightCorner + "\n";
             return output;
         }
 
         private static string CreateMiddleOfBox(BoxModel model)
         {
-            var output = PrintConstants.VerticalBar.ToString();
+            var output = '│'.ToString();
             for (var i = 0; i < model.EdgeLength*SpacesPerUnit; i++)
                 output += " ";
-            output += PrintConstants.VerticalBar + "\n";
+            output += '│' + "\n";
             return output;
         }
     }

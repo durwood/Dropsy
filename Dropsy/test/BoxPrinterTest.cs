@@ -10,14 +10,28 @@ namespace Dropsy.test
         {
             var testObject = new BoxPrinter();
             var model = new BoxModel(1);
-            var topLine = PrintConstants.UpperLeft.ToString() + PrintConstants.HorizontalBar +
-                          PrintConstants.HorizontalBar +
-                          PrintConstants.HorizontalBar + PrintConstants.UpperRight + "\n";
-            var middleLine = PrintConstants.VerticalBar + "   " + PrintConstants.VerticalBar + "\n";
-            var bottomLine = PrintConstants.LowerLeft.ToString() + PrintConstants.HorizontalBar +
-                             PrintConstants.HorizontalBar +
-                             PrintConstants.HorizontalBar + PrintConstants.LowerRight + "\n";
-            Assert.That(testObject.Print(model), Is.EqualTo(topLine + middleLine + bottomLine));
+
+            var expected = "";
+            expected += "┌───┐\n";
+            expected += "│   │\n";
+            expected += "└───┘\n";
+
+            Assert.That(testObject.Print(model), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void TwoByTwoPrintsCorrectly()
+        {
+            var testObject = new BoxPrinter();
+            var model = new BoxModel(2);
+
+            var expected = "";
+            expected += "┌──────┐\n";
+            expected += "│      │\n";
+            expected += "│      │\n";
+            expected += "└──────┘\n";
+
+            Assert.That(testObject.Print(model), Is.EqualTo(expected));
         }
     }
 
