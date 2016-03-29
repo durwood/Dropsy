@@ -7,7 +7,8 @@ namespace Dropsy.test
     {
         private static void AssertSizeIsCorrect(int edgeLength, string expected)
         {
-            var testObject = new BoxPrinter();
+            IChip chip = new TestChip(edgeLength);
+            var testObject = new BoxPrinter(chip);
             var model = new BoxModel(edgeLength);
             Assert.That(testObject.Print(model), Is.EqualTo(expected));
         }
@@ -16,6 +17,7 @@ namespace Dropsy.test
         public void OneByOnePrintsCorrectly()
         {
             var expected = "";
+            expected += "  1  \n";
             expected += "┌───┐\n";
             expected += "│   │\n";
             expected += "└───┘\n";
@@ -28,6 +30,7 @@ namespace Dropsy.test
         public void TwoByTwoPrintsCorrectly()
         {
             var expected = "";
+            expected += "    2   \n";
             expected += "┌──────┐\n";
             expected += "│      │\n";
             expected += "│      │\n";
@@ -35,6 +38,26 @@ namespace Dropsy.test
             expected += "  1  2  \n";
 
             AssertSizeIsCorrect(2, expected);
+        }
+    }
+
+    public interface IChip
+    {
+        int Random();
+    }
+
+    public class TestChip : IChip
+    {
+        private readonly int _value;
+
+        public TestChip(int value)
+        {
+            _value = value;
+        }
+
+        public int Random()
+        {
+            return _value;
         }
     }
 }

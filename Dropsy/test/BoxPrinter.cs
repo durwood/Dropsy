@@ -3,16 +3,34 @@
     public class BoxPrinter
     {
         private const int SpacesPerUnit = 3;
+        private readonly IChip _chip;
+
+        public BoxPrinter(IChip chip)
+        {
+            _chip = chip;
+        }
 
         public string Print(BoxModel model)
         {
-            var output = CreateBoxEnd(model, '┌', '┐');
+            var output = CreateChip(model);
+            output += CreateBoxEnd(model, '┌', '┐');
             for (var i = 0; i < model.EdgeLength; i++)
                 output += CreateMiddleOfBox(model);
             output += CreateBoxEnd(model, '└', '┘');
             output += CreateLabels(model);
 
             return output;
+        }
+
+        private string CreateChip(BoxModel model)
+        {
+            var spaces = model.EdgeLength*SpacesPerUnit + 2;
+            var output = new char[spaces + 1];
+            for (var i = 0; i < spaces; i++)
+                output[i] = ' ';
+            output[spaces] = '\n';
+            output[spaces/2] = char.Parse(_chip.Random().ToString());
+            return new string(output);
         }
 
         private string CreateLabels(BoxModel model)
