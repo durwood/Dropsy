@@ -8,7 +8,9 @@ namespace Dropsy
         private static void Main(string[] args)
         {
             const int edgeLength = 7;
-            Console.Write(new BoxPrinter(new Chip(edgeLength)).Print(new BoxModel(edgeLength)));
+            var model = new BoxModel(edgeLength);
+            model.AddChip(new Chip(edgeLength));
+            Console.Write(new BoxPrinter(model).Print());
             Console.ReadKey();
         }
     }

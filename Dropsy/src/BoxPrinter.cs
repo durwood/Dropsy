@@ -2,41 +2,42 @@
 {
     public class BoxPrinter
     {
+        private BoxModel _model;
         private const int SpacesPerUnit = 3;
-        private readonly IChip _chip;
 
-        public BoxPrinter(IChip chip)
+        public BoxPrinter(BoxModel model)
         {
-            _chip = chip;
+            _model = model;
+
         }
 
-        public string Print(BoxModel model)
+        public string Print()
         {
-            var output = CreateChip(model);
-            output += CreateBoxEnd(model, '┌', '┐');
-            for (var i = 0; i < model.EdgeLength; i++)
-                output += CreateMiddleOfBox(model);
-            output += CreateBoxEnd(model, '└', '┘');
-            output += CreateLabels(model);
+            var output = CreateChip();
+            output += CreateBoxEnd(_model, '┌', '┐');
+            for (var i = 0; i < _model.EdgeLength; i++)
+                output += CreateMiddleOfBox(_model);
+            output += CreateBoxEnd(_model, '└', '┘');
+            output += CreateLabels();
 
             return output;
         }
 
-        private string CreateChip(BoxModel model)
+        private string CreateChip()
         {
-            var spaces = model.EdgeLength*SpacesPerUnit + 2;
+            var spaces = _model.EdgeLength*SpacesPerUnit + 2;
             var output = new char[spaces + 1];
             for (var i = 0; i < spaces; i++)
                 output[i] = ' ';
             output[spaces] = '\n';
-            output[spaces/2] = char.Parse(_chip.Random().ToString());
+            output[spaces/2] = char.Parse(_model.GetChip().Random().ToString());
             return new string(output);
         }
 
-        private string CreateLabels(BoxModel model)
+        private string CreateLabels()
         {
             var output = " ";
-            for (var i = 0; i < model.EdgeLength; ++i)
+            for (var i = 0; i < _model.EdgeLength; ++i)
                 output += " " + (i + 1) + " ";
             output += " \n";
             return output;

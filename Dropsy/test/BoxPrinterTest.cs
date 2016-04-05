@@ -8,9 +8,10 @@ namespace Dropsy.test
         private static void AssertSizeIsCorrect(int edgeLength, string expected)
         {
             IChip chip = new TestChip(edgeLength);
-            var testObject = new BoxPrinter(chip);
             var model = new BoxModel(edgeLength);
-            Assert.That(testObject.Print(model), Is.EqualTo(expected));
+            var testObject = new BoxPrinter(model);
+            model.AddChip(chip);
+            Assert.That(testObject.Print(), Is.EqualTo(expected));
         }
 
         [Test]
