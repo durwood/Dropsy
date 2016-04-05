@@ -17,15 +17,14 @@ namespace Dropsy
         public void Run()
         {
             _console.Write(new BoxPrinter(_model).Print());
-            var key = GetSelectedColumn();
-            //Console.Write("Select a colun for the chip");
-            //model.PutChipInColumn(key);
-
+            _console.Write("Select a colun for the chip");
+            _model.PutChipInColumn(GetSelectedColumn());
         }
 
         private int GetSelectedColumn()
         {
-            return _console.Read();
+            var column = _console.Read();
+            return int.Parse(column.ToString()) - 1;
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Dropsy
     {
         public readonly int EdgeLength;
         private IChip _chip = null;
+        private int _columnForChip = -1;
 
         public BoxModel(int edgeLength)
         {
@@ -22,14 +23,19 @@ namespace Dropsy
             return _chip;
         }
 
-        public void PutChipInColumn(ConsoleKeyInfo key)
+        public void PutChipInColumn(int column)
         {
-            throw new NotImplementedException();
+            _columnForChip = column;
         }
 
         public bool HasNoChip()
         {
             return _chip == null;
+        }
+
+        public bool HasChipIn(int column)
+        {
+            return _columnForChip == column;
         }
     }
 }

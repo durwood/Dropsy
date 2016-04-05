@@ -5,32 +5,53 @@ namespace Dropsy.test
     [TestFixture]
     public class ControllerTests
     {
+        [SetUp]
+        public void Setup()
+        {
+            _boxModel = new BoxModel(2);
+            _consoleWrapper = new TestConsole();
+            _testObj = new Controller(_consoleWrapper, _boxModel);
+        }
+
         private BoxModel _boxModel;
+        private TestConsole _consoleWrapper;
+        private Controller _testObj;
 
         [Test]
         public void OutputsStuffToConsolOnRun()
         {
-            _boxModel = new BoxModel(2);
-            var consoleWrapper = new TestConsole();
-            var testObj = new Controller(consoleWrapper, _boxModel);
-            testObj.Run();
+            _consoleWrapper.NextChar = '3';
+            _testObj.Run();
 
-            Assert.That(consoleWrapper.Outputs, Is.EqualTo(1));
+            Assert.That(_consoleWrapper.NumWrites, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void RunTakesUsersInputAndTellsModelAColumn()
+        {
+            _consoleWrapper.NextChar = '3';
+            _testObj.Run();
+            Assert.That(_consoleWrapper.NumReads, Is.EqualTo(1));
+            Assert.True(_boxModel.HasChipIn(2));
         }
     }
 
     public class TestConsole : ConsoleWrapper
     {
-        public int Outputs = 0;
+        public int NumWrites;
+        public int NumReads;
+        public char NextChar { get; set; }
 
         public override void Write(string output)
         {
-            Outputs++;
+            NumWrites++;
         }
 
         public override char Read()
         {
-            return 's';
+            NumReads++;
+            return NextChar;
         }
+        
     }
 }
