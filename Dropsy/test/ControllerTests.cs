@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Dropsy.test
 {
@@ -12,22 +11,26 @@ namespace Dropsy.test
         public void OutputsStuffToConsolOnRun()
         {
             _boxModel = new BoxModel(2);
-            var consoleWrapper = new ConsoleWrapper();
+            var consoleWrapper = new TestConsole();
             var testObj = new Controller(consoleWrapper, _boxModel);
+            testObj.Run();
 
+            Assert.That(consoleWrapper.Outputs, Is.EqualTo(1));
         }
     }
 
-    public class ConsoleWrapper
+    public class TestConsole : ConsoleWrapper
     {
-        public void Write(string output)
+        public int Outputs = 0;
+
+        public override void Write(string output)
         {
-            Console.Write(output);
+            Outputs++;
         }
 
-        public char Read()
+        public override char Read()
         {
-            return Console.ReadKey(true).KeyChar;
+            return 's';
         }
     }
 }

@@ -2,29 +2,32 @@
 {
     public class BoxPrinter
     {
-        private BoxModel _model;
         private const int SpacesPerUnit = 3;
+        private readonly BoxModel _model;
 
         public BoxPrinter(BoxModel model)
         {
             _model = model;
-
         }
 
         public string Print()
         {
-            var output = CreateChip();
-            output += CreateBoxEnd(_model, '┌', '┐');
+            var output = PrintChipLine();
+
+            output += PrintBoxEnd(_model, '┌', '┐');
             for (var i = 0; i < _model.EdgeLength; i++)
-                output += CreateMiddleOfBox(_model);
-            output += CreateBoxEnd(_model, '└', '┘');
-            output += CreateLabels();
+                output += PrintMiddleOfBox(_model);
+            output += PrintBoxEnd(_model, '└', '┘');
+            output += PrintLabels();
 
             return output;
         }
 
-        private string CreateChip()
+        private string PrintChipLine()
         {
+            if (_model.HasNoChip())
+                return "";
+
             var spaces = _model.EdgeLength*SpacesPerUnit + 2;
             var output = new char[spaces + 1];
             for (var i = 0; i < spaces; i++)
@@ -34,7 +37,7 @@
             return new string(output);
         }
 
-        private string CreateLabels()
+        private string PrintLabels()
         {
             var output = " ";
             for (var i = 0; i < _model.EdgeLength; ++i)
@@ -43,7 +46,7 @@
             return output;
         }
 
-        private static string CreateBoxEnd(BoxModel model, char leftCorner, char rightCorner)
+        private static string PrintBoxEnd(BoxModel model, char leftCorner, char rightCorner)
         {
             var output = leftCorner.ToString();
             for (var i = 0; i < model.EdgeLength*SpacesPerUnit; i++)
@@ -52,7 +55,7 @@
             return output;
         }
 
-        private static string CreateMiddleOfBox(BoxModel model)
+        private static string PrintMiddleOfBox(BoxModel model)
         {
             var output = '│'.ToString();
             for (var i = 0; i < model.EdgeLength*SpacesPerUnit; i++)
