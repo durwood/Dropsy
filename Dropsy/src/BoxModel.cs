@@ -1,3 +1,5 @@
+using System;
+
 namespace Dropsy
 {
     public class BoxModel
@@ -18,6 +20,11 @@ namespace Dropsy
         public IChip GetChip()
         {
             return _chip;
+        }
+
+        public void PutChipInColumn(ConsoleKeyInfo key)
+        {
+            throw new NotImplementedException();
         }
     }
 }

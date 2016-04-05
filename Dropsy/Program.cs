@@ -1,5 +1,6 @@
 ﻿using System;
 using Dropsy.test;
+using NUnit.Framework.Api;
 
 namespace Dropsy
 {
@@ -10,8 +11,9 @@ namespace Dropsy
             const int edgeLength = 7;
             var model = new BoxModel(edgeLength);
             model.AddChip(new Chip(edgeLength));
-            Console.Write(new BoxPrinter(model).Print());
-            Console.ReadKey();
+
+            var controller = new Controller(new ConsoleWrapper(), model);
+            controller.Run();
         }
     }
 
