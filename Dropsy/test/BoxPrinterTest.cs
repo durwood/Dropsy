@@ -61,6 +61,26 @@ namespace Dropsy.test
         }
 
         [Test]
+        public void PutTheChipInAColumn()
+        {
+            _edgeLength = 2;
+            CreateTestObj(_edgeLength);
+
+            IChip chip = new TestChip(_edgeLength);
+            _model.AddChip(chip);
+            _model.PutChipInColumn(1);
+
+            var expected = "";
+            expected += "┌──────┐\n";
+            expected += "│      │\n";
+            expected += "│    2 │\n";
+            expected += "└──────┘\n";
+            expected += "  1  2  \n";
+
+            AssertSizeIsCorrect(_edgeLength, expected);
+        }
+
+        [Test]
         public void ChipDoesNotNeedToBePresent()
         {
             _edgeLength = 2;
