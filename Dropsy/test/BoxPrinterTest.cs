@@ -41,11 +41,6 @@ namespace Dropsy.test
         }
     }
 
-    public interface IChip
-    {
-        int Random();
-    }
-
     public class TestChip : IChip
     {
         private readonly int _value;

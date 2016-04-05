@@ -1,4 +1,4 @@
-namespace Dropsy.test
+namespace Dropsy
 {
     public class BoxModel
     {
