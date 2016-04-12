@@ -20,38 +20,50 @@ namespace Dropsy.test
         [Test]
         public void OutputsStuffToConsolOnRun()
         {
-            _consoleWrapper.NextChar = '1';
+            _consoleWrapper.NextChar = new[] {'1'};
             _testObj.Run();
 
             Assert.That(_consoleWrapper.NumWrites, Is.EqualTo(2));
         }
 
         [Test]
+        public void RunAllowsTwoConsecutiveChipsToBeDropped()
+        {
+            _consoleWrapper.NextChar = new[] {'1', '2'};
+            _testObj.Run();
+            Assert.That(_consoleWrapper.NumReads, Is.EqualTo(2));
+            Assert.True(_boxModel.HasChipIn(0));
+            Assert.True(_boxModel.HasChipIn(1));
+        }
+
+        [Test]
         public void RunTakesUsersInputAndTellsModelAColumn()
         {
-            _consoleWrapper.NextChar = '2';
+            _consoleWrapper.NextChar = new[] {'2'};
             _testObj.Run();
             Assert.That(_consoleWrapper.NumReads, Is.EqualTo(1));
             Assert.True(_boxModel.HasChipIn(1));
         }
     }
 
-    public class TestConsole : ConsoleWrapper
+    public class TestConsole : IConsoleWrapper
     {
-        public int NumWrites;
         public int NumReads;
-        public char NextChar { get; set; }
+        public int NumWrites;
+        public char[] NextChar { get; set; }
 
-        public override void Write(string output)
+        public void Write(string output)
         {
             NumWrites++;
         }
 
-        public override char Read()
+        public char Read()
         {
-            NumReads++;
-            return NextChar;
+            return NextChar[NumReads++];
         }
-        
+
+        public void Clear()
+        {
+        }
     }
 }

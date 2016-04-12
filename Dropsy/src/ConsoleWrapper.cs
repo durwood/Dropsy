@@ -2,8 +2,13 @@ using System;
 
 namespace Dropsy
 {
-    public class ConsoleWrapper
+    public class ConsoleWrapper : IConsoleWrapper
     {
+        public ConsoleWrapper()
+        {
+            Console.CursorVisible = false;
+        }
+
         public virtual void Write(string output)
         {
             Console.Write(output);

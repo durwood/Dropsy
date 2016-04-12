@@ -5,10 +5,10 @@ namespace Dropsy
 {
     public class Controller
     {
-        private readonly ConsoleWrapper _console;
+        private readonly IConsoleWrapper _console;
         private readonly BoxModel _model;
 
-        public Controller(ConsoleWrapper console, BoxModel model)
+        public Controller(IConsoleWrapper console, BoxModel model)
         {
             _console = console;
             _model = model;
@@ -16,12 +16,13 @@ namespace Dropsy
 
         public void Run()
         {
-            Console.CursorVisible = false;
-            _model.AddChip();
-            Print();
-            GetInput();
-            Print();
-            GetInput();
+                _model.AddChip();
+                Print();
+                GetInput();
+
+                _model.AddChip();
+                Print();
+                GetInput();
         }
 
         private void GetInput()
