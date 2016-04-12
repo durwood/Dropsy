@@ -25,7 +25,7 @@
         private string PrintChipLine()
         {
             if (_model.HasNoChip())
-                return "";
+                return "\n";
 
             var spaces = _model.EdgeLength * 3 + 2;
             var output = new char[spaces + 1];

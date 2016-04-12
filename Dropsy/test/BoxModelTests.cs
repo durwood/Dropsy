@@ -22,8 +22,9 @@ namespace Dropsy.test
         [Test]
         public void HasChipInAndPutChipInEndToEnd()
         {
-            _testObj.PutChipInColumn(3);
-            Assert.True(_testObj.HasChipIn(3));
+            _testObj.AddChip();
+            _testObj.PutChipInColumn(2);
+            Assert.True(_testObj.HasChipIn(2));
         }
     }
 }   

@@ -1,5 +1,4 @@
-﻿using System;
-using Dropsy.test;
+﻿using Dropsy.test;
 using NUnit.Framework.Api;
 
 namespace Dropsy
@@ -12,31 +11,6 @@ namespace Dropsy
             var model = new BoxModel(edgeLength);
             var controller = new Controller(new ConsoleWrapper(), model);
             controller.Run();
-        }
-    }
-
-    internal class Chip : IChip
-    {
-        private readonly int _value;
-
-        public Chip(int value)
-        {
-            _value = value;
-        }
-
-        public static IChip CreateRandom(int edgeLength)
-        {
-            return new Chip(new Random().Next(1, edgeLength));
-        }
-
-        public string print()
-        {
-            return HasValue() ? _value.ToString(): " ";
-        }
-
-        public bool HasValue()
-        {
-            return _value != 0;
         }
     }
 }

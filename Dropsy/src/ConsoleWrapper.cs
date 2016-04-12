@@ -13,5 +13,10 @@ namespace Dropsy
         {
             return Console.ReadKey(true).KeyChar;
         }
+
+        public void Clear()
+        {
+            Console.Clear();
+        }
     }
 }
