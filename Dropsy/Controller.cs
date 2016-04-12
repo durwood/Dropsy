@@ -16,18 +16,20 @@ namespace Dropsy
 
         public void Run()
         {
+            do
+            {
                 _model.AddChip();
                 Print();
-                GetInput();
-
-                _model.AddChip();
-                Print();
-                GetInput();
+            } while (GetInput());
         }
 
-        private void GetInput()
+        private bool GetInput()
         {
-            _model.PutChipInColumn(GetSelectedColumn());
+            var input = _console.Read();
+            if (input == 'q')
+                return false;
+            _model.PutChipInColumn(GetSelectedColumn(input));
+            return true;
         }
 
         private void Print()
@@ -36,9 +38,8 @@ namespace Dropsy
             _console.Write(new BoxPrinter(_model).Print());
         }
 
-        private int GetSelectedColumn()
+        private int GetSelectedColumn(char column)
         {
-            var column = _console.Read();
             return int.Parse(column.ToString()) - 1;
         }
     }

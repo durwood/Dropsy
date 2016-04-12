@@ -27,11 +27,11 @@ namespace Dropsy.test
         }
 
         [Test]
-        public void RunAllowsTwoConsecutiveChipsToBeDropped()
+        public void RunCanTakeABunchOfInputs()
         {
-            _consoleWrapper.NextChar = new[] {'1', '2'};
+            _consoleWrapper.NextChar = new[] {'1', '2','1', '2', 'q'};
             _testObj.Run();
-            Assert.That(_consoleWrapper.NumReads, Is.EqualTo(2));
+            Assert.That(_consoleWrapper.NumReads, Is.EqualTo(5));
             Assert.True(_boxModel.HasChipIn(0));
             Assert.True(_boxModel.HasChipIn(1));
         }
