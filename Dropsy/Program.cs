@@ -10,8 +10,6 @@ namespace Dropsy
         {
             const int edgeLength = 7;
             var model = new BoxModel(edgeLength);
-            model.AddChip(Chip.CreateRandom(edgeLength));
-
             var controller = new Controller(new ConsoleWrapper(), model);
             controller.Run();
         }
@@ -33,7 +31,12 @@ namespace Dropsy
 
         public string print()
         {
-            return _value == 0 ? " " : _value.ToString();
+            return HasValue() ? _value.ToString(): " ";
+        }
+
+        public bool HasValue()
+        {
+            return _value != 0;
         }
     }
 }

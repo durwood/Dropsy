@@ -3,5 +3,6 @@
     public interface IChip
     {
         string print();
+        bool HasValue();
     }
 }

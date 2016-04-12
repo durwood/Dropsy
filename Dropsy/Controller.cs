@@ -16,6 +16,7 @@ namespace Dropsy
 
         public void Run()
         {
+            _model.AddChip();
             _console.Write(new BoxPrinter(_model).Print());
             _console.Write("Select a colun for the chip");
             _model.PutChipInColumn(GetSelectedColumn());

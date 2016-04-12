@@ -7,8 +7,7 @@ namespace Dropsy
     public class BoxModel
     {
         public readonly int EdgeLength;
-        private IChip _chip = null;
-        private int _columnForChip = -1;
+        private IChip _unplacedChip = null;
         private List<List<IChip>> _rows;
 
         public BoxModel(int edgeLength)
@@ -27,29 +26,35 @@ namespace Dropsy
             }
         }
 
-        public void AddChip(IChip chip)
+        public void AddChip()
         {
-            _chip = chip;
+            _unplacedChip = Chip.CreateRandom(EdgeLength);
         }
 
         public IChip GetChip()
         {
-            return _chip;
+            return _unplacedChip;
+        }
+
+        internal void AddChip(IChip chip)
+        {
+            _unplacedChip = chip;
         }
 
         public void PutChipInColumn(int column)
         {
-            _columnForChip = column;
+            _rows[EdgeLength-1][column] = _unplacedChip;
+            _unplacedChip = null;
         }
 
         public bool HasNoChip()
         {
-            return _chip == null;
+            return _unplacedChip == null;
         }
 
         public bool HasChipIn(int column)
         {
-            return _columnForChip == column;
+            return _rows[EdgeLength-1][column].HasValue();
         }
 
         public List<IChip> GetRow(int row)
