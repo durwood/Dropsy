@@ -2,7 +2,6 @@
 {
     public class BoxPrinter
     {
-        private const int SpacesPerUnit = 3;
         private readonly BoxModel _model;
 
         public BoxPrinter(BoxModel model)
@@ -15,8 +14,8 @@
             var output = PrintChipLine();
 
             output += PrintBoxEnd(_model, '┌', '┐');
-            for (var i = 0; i < _model.EdgeLength; i++)
-                output += PrintMiddleOfBox(_model);
+            for (var row = 0; row < _model.EdgeLength; row++)
+                output += PrintMiddleOfBox(_model, row);
             output += PrintBoxEnd(_model, '└', '┘');
             output += PrintLabels();
 
@@ -28,7 +27,7 @@
             if (_model.HasNoChip())
                 return "";
 
-            var spaces = _model.EdgeLength*SpacesPerUnit + 2;
+            var spaces = _model.EdgeLength * 3 + 2;
             var output = new char[spaces + 1];
             for (var i = 0; i < spaces; i++)
                 output[i] = ' ';
@@ -49,17 +48,19 @@
         private static string PrintBoxEnd(BoxModel model, char leftCorner, char rightCorner)
         {
             var output = leftCorner.ToString();
-            for (var i = 0; i < model.EdgeLength*SpacesPerUnit; i++)
-                output += '─';
+            for (var i = 0; i < model.EdgeLength; i++)
+                output += "───";
             output += rightCorner + "\n";
             return output;
         }
 
-        private static string PrintMiddleOfBox(BoxModel model)
+        private static string PrintMiddleOfBox(BoxModel model, int row)
         {
             var output = '│'.ToString();
-            for (var i = 0; i < model.EdgeLength*SpacesPerUnit; i++)
-                output += " ";
+            foreach (var entry in model.GetRow(row))
+            {
+                output += "   ";
+            }
             output += '│' + "\n";
             return output;
         }

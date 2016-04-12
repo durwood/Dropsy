@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Dropsy
 {
@@ -7,10 +9,22 @@ namespace Dropsy
         public readonly int EdgeLength;
         private IChip _chip = null;
         private int _columnForChip = -1;
+        private List<List<IChip>> _rows;
 
         public BoxModel(int edgeLength)
         {
             EdgeLength = edgeLength;
+
+            _rows = new List<List<IChip>>();
+            for (int i = 0; i < EdgeLength; i++)
+            {
+                var chips = new List<IChip>();
+                _rows.Add(chips);
+                for (int j = 0; j < EdgeLength; j++)
+                {
+                    chips.Add(null);
+                }
+            }
         }
 
         public void AddChip(IChip chip)
@@ -36,6 +50,11 @@ namespace Dropsy
         public bool HasChipIn(int column)
         {
             return _columnForChip == column;
+        }
+
+        public List<IChip> GetRow(int row)
+        {
+            return _rows[row];
         }
     }
 }
