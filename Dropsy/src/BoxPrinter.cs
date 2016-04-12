@@ -32,7 +32,7 @@
             for (var i = 0; i < spaces; i++)
                 output[i] = ' ';
             output[spaces] = '\n';
-            output[spaces/2] = char.Parse(_model.GetChip().Random().ToString());
+            output[spaces/2] = char.Parse(_model.GetChip().print());
             return new string(output);
         }
 
@@ -59,7 +59,7 @@
             var output = '│'.ToString();
             foreach (var entry in model.GetRow(row))
             {
-                output += "   ";
+                output += " " + entry.print() + " ";
             }
             output += '│' + "\n";
             return output;

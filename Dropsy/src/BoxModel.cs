@@ -22,7 +22,7 @@ namespace Dropsy
                 _rows.Add(chips);
                 for (int j = 0; j < EdgeLength; j++)
                 {
-                    chips.Add(null);
+                    chips.Add(new Chip(0));
                 }
             }
         }

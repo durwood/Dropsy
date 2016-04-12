@@ -27,7 +27,7 @@ namespace Dropsy.test
             _edgeLength = 1;
             CreateTestObj(_edgeLength);
 
-            IChip chip = new TestChip(_edgeLength);
+            IChip chip = new Chip(_edgeLength);
             _model.AddChip(chip);
 
             var expected = "";
@@ -46,7 +46,7 @@ namespace Dropsy.test
             _edgeLength = 2;
             CreateTestObj(_edgeLength);
 
-            IChip chip = new TestChip(_edgeLength);
+            IChip chip = new Chip(_edgeLength);
             _model.AddChip(chip);
 
             var expected = "";
@@ -66,7 +66,7 @@ namespace Dropsy.test
             _edgeLength = 2;
             CreateTestObj(_edgeLength);
 
-            IChip chip = new TestChip(_edgeLength);
+            IChip chip = new Chip(_edgeLength);
             _model.AddChip(chip);
             _model.PutChipInColumn(1);
 
@@ -94,21 +94,6 @@ namespace Dropsy.test
             expected += "  1  2  \n";
 
             AssertSizeIsCorrect(_edgeLength, expected);
-        }
-    }
-
-    public class TestChip : IChip
-    {
-        private readonly int _value;
-
-        public TestChip(int value)
-        {
-            _value = value;
-        }
-
-        public int Random()
-        {
-            return _value;
         }
     }
 }

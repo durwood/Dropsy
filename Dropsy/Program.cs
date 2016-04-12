@@ -10,7 +10,7 @@ namespace Dropsy
         {
             const int edgeLength = 7;
             var model = new BoxModel(edgeLength);
-            model.AddChip(new Chip(edgeLength));
+            model.AddChip(Chip.CreateRandom(edgeLength));
 
             var controller = new Controller(new ConsoleWrapper(), model);
             controller.Run();
@@ -19,16 +19,21 @@ namespace Dropsy
 
     internal class Chip : IChip
     {
-        private readonly int _edgeLength;
+        private readonly int _value;
 
-        public Chip(int edgeLength)
+        public Chip(int value)
         {
-            _edgeLength = edgeLength;
+            _value = value;
         }
 
-        public int Random()
+        public static IChip CreateRandom(int edgeLength)
         {
-            return new Random().Next(1, _edgeLength);
+            return new Chip(new Random().Next(1, edgeLength));
+        }
+
+        public string print()
+        {
+            return _value == 0 ? " " : _value.ToString();
         }
     }
 }
