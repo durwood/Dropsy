@@ -70,7 +70,7 @@ namespace Dropsy.test
             _model.AddChip(chip);
             _model.PutChipInColumn(1);
 
-            var expected = "";
+            var expected = "\n";
             expected += "┌──────┐\n";
             expected += "│      │\n";
             expected += "│    2 │\n";
@@ -87,6 +87,7 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
             var expected = "";
 
+            expected += "\n";
             expected += "┌──────┐\n";
             expected += "│      │\n";
             expected += "│      │\n";

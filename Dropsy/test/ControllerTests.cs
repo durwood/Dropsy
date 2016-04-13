@@ -20,7 +20,7 @@ namespace Dropsy.test
         [Test]
         public void OutputsStuffToConsolOnRun()
         {
-            _consoleWrapper.NextChar = new[] {'1'};
+            _consoleWrapper.NextChar = new[] {'1', 'q' };
             _testObj.Run();
 
             Assert.That(_consoleWrapper.NumWrites, Is.EqualTo(2));
@@ -39,9 +39,9 @@ namespace Dropsy.test
         [Test]
         public void RunTakesUsersInputAndTellsModelAColumn()
         {
-            _consoleWrapper.NextChar = new[] {'2'};
+            _consoleWrapper.NextChar = new[] {'2', 'q'};
             _testObj.Run();
-            Assert.That(_consoleWrapper.NumReads, Is.EqualTo(1));
+            Assert.That(_consoleWrapper.NumReads, Is.EqualTo(2));
             Assert.True(_boxModel.HasChipIn(1));
         }
     }
