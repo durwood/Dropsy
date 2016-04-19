@@ -15,7 +15,7 @@
 
             output += PrintBoxEnd(_model, '┌', '┐');
             for (var row = 0; row < _model.EdgeLength; row++)
-                output += PrintMiddleOfBox(_model, row);
+                output += PrintRow(_model, row);
             output += PrintBoxEnd(_model, '└', '┘');
             output += PrintLabels();
 
@@ -32,7 +32,7 @@
             for (var i = 0; i < spaces; i++)
                 output[i] = ' ';
             output[spaces] = '\n';
-            output[spaces/2] = char.Parse(_model.GetChip().print());
+            output[spaces/2] = char.Parse(_model.GetUnplacedChip().print());
             return new string(output);
         }
 
@@ -54,12 +54,12 @@
             return output;
         }
 
-        private static string PrintMiddleOfBox(BoxModel model, int row)
+        private static string PrintRow(BoxModel model, int row)
         {
             var output = '│'.ToString();
-            foreach (var entry in model.GetRow(row))
+            foreach (var cell in model.GetRow(row))
             {
-                output += " " + entry.print() + " ";
+                output += " " + cell.print() + " ";
             }
             output += '│' + "\n";
             return output;

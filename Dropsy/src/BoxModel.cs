@@ -29,7 +29,7 @@ namespace Dropsy
             _unplacedChip = Chip.CreateRandom(EdgeLength);
         }
 
-        public IChip GetChip()
+        public IChip GetUnplacedChip()
         {
             return _unplacedChip;
         }
@@ -41,7 +41,13 @@ namespace Dropsy
 
         public void PutChipInColumn(int column)
         {
-            _rows[EdgeLength - 1][column] = _unplacedChip;
+            for (var row = EdgeLength - 1; row >= 0; row--)
+            {
+                if (_rows[row][column].HasValue()) continue;
+                _rows[row][column] = _unplacedChip;
+                break;
+            }
+
             _unplacedChip = null;
         }
 

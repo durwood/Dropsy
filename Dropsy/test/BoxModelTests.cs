@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 
 namespace Dropsy.test
 {
@@ -25,6 +27,19 @@ namespace Dropsy.test
             _testObj.AddChip();
             _testObj.PutChipInColumn(2);
             Assert.True(_testObj.HasChipIn(2));
+        }
+
+        [Test]
+        public void TwoChipsCanGoInSameColumn()
+        {
+            _testObj = new BoxModel(2);
+            _testObj.AddChip();
+            _testObj.PutChipInColumn(1);
+            _testObj.AddChip();
+            _testObj.PutChipInColumn(1);
+
+            Assert.That(_testObj.GetRow(1).Count(n => n.print() != " "), Is.EqualTo(1));
+            Assert.That(_testObj.GetRow(0).Count(n => n.print() != " "), Is.EqualTo(1));
         }
     }
 }   

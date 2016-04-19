@@ -96,5 +96,29 @@ namespace Dropsy.test
 
             AssertSizeIsCorrect(_edgeLength, expected);
         }
+
+        [Test]
+        public void TwoChipsCanBePutInSameColumn()
+        {
+            _edgeLength = 2;
+            CreateTestObj(_edgeLength);
+            var expected = "";
+
+            IChip chip = new Chip(_edgeLength);
+            _model.AddChip(chip);
+            _model.PutChipInColumn(1);
+            chip = new Chip(_edgeLength);
+            _model.AddChip(chip);
+            _model.PutChipInColumn(1);
+
+            expected += "\n";
+            expected += "┌──────┐\n";
+            expected += "│    2 │\n";
+            expected += "│    2 │\n";
+            expected += "└──────┘\n";
+            expected += "  1  2  \n";
+
+            AssertSizeIsCorrect(_edgeLength, expected);
+        }
     }
 }
