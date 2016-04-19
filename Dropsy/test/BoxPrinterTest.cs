@@ -3,13 +3,13 @@
 namespace Dropsy.test
 {
     [TestFixture]
-    internal class BoxPrinterTest
+    public class BoxPrinterTest
     {
-        private static BoxModel _model;
-        private static BoxPrinter _printer;
-        private static int _edgeLength;
+        private BoxModel _model;
+        private  BoxPrinter _printer;
+        private  int _edgeLength;
 
-        private static void AssertSizeIsCorrect(int edgeLength, string expected)
+        private void AssertSizeIsCorrect(int edgeLength, string expected)
         {
             _edgeLength = edgeLength;
             Assert.That(_printer.Print(), Is.EqualTo(expected));

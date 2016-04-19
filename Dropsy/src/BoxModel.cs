@@ -51,14 +51,9 @@ namespace Dropsy
             _unplacedChip = null;
         }
 
-        public bool HasNoChip()
+        public bool HasNoUnplacedChip()
         {
             return _unplacedChip == null;
-        }
-
-        public bool HasChipIn(int column)
-        {
-            return _rows[EdgeLength - 1][column].HasValue();
         }
 
         public List<IChip> GetRow(int row)

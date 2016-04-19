@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 
 namespace Dropsy.test
 {
@@ -32,8 +33,8 @@ namespace Dropsy.test
             _consoleWrapper.NextChar = new[] {'1', '2','1', '2', 'q'};
             _testObj.Run();
             Assert.That(_consoleWrapper.NumReads, Is.EqualTo(5));
-            Assert.True(_boxModel.HasChipIn(0));
-            Assert.True(_boxModel.HasChipIn(1));
+            Assert.True(HasChipIn(0));
+            Assert.True(HasChipIn(1));
         }
 
         [Test]
@@ -42,7 +43,12 @@ namespace Dropsy.test
             _consoleWrapper.NextChar = new[] {'2', 'q'};
             _testObj.Run();
             Assert.That(_consoleWrapper.NumReads, Is.EqualTo(2));
-            Assert.True(_boxModel.HasChipIn(1));
+            Assert.True(HasChipIn(1));
+        }
+
+        private bool HasChipIn(int row)
+        {
+            return _boxModel.GetRow(row).Count(chip => chip.HasValue()) > 0;
         }
     }
 
