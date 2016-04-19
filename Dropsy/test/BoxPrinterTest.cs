@@ -8,6 +8,7 @@ namespace Dropsy.test
         private BoxModel _model;
         private  BoxPrinter _printer;
         private  int _edgeLength;
+        private FakeChipFactory _fakeChipFactory;
 
         private void AssertSizeIsCorrect(int edgeLength, string expected)
         {
@@ -17,7 +18,8 @@ namespace Dropsy.test
 
         public void CreateTestObj(int edgeLength)
         {
-            _model = new BoxModel(edgeLength);
+            _fakeChipFactory = new FakeChipFactory();
+            _model = new BoxModel(edgeLength, _fakeChipFactory);
             _printer = new BoxPrinter(_model);
         }
 
@@ -28,7 +30,8 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
 
             IChip chip = new Chip(_edgeLength);
-            _model.AddChip(chip);
+            _fakeChipFactory.Chip = chip;
+            _model.AddUnplacedChip();
 
             var expected = "";
             expected += "  1  \n";
@@ -47,7 +50,8 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
 
             IChip chip = new Chip(_edgeLength);
-            _model.AddChip(chip);
+            _fakeChipFactory.Chip = chip;
+            _model.AddUnplacedChip();
 
             var expected = "";
             expected += "    2   \n";
@@ -67,7 +71,8 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
 
             IChip chip = new Chip(_edgeLength);
-            _model.AddChip(chip);
+            _fakeChipFactory.Chip = chip;
+            _model.AddUnplacedChip();
             _model.PutChipInColumn(1);
 
             var expected = "\n";
@@ -105,20 +110,32 @@ namespace Dropsy.test
             var expected = "";
 
             IChip chip = new Chip(_edgeLength);
-            _model.AddChip(chip);
+            _fakeChipFactory.Chip = chip;
+            _model.AddUnplacedChip();
             _model.PutChipInColumn(1);
-            chip = new Chip(_edgeLength);
-            _model.AddChip(chip);
+            _model.AddUnplacedChip();
             _model.PutChipInColumn(1);
+            _model.AddUnplacedChip();
+            _model.PutChipInColumn(0);
 
             expected += "\n";
             expected += "┌──────┐\n";
             expected += "│    2 │\n";
-            expected += "│    2 │\n";
+            expected += "│ 2  2 │\n";
             expected += "└──────┘\n";
             expected += "  1  2  \n";
 
             AssertSizeIsCorrect(_edgeLength, expected);
+        }
+    }
+
+    public class FakeChipFactory : IChipFactory
+    {
+        public IChip Chip;
+
+        public IChip Create(int edgeLength)
+        {
+            return Chip;
         }
     }
 }

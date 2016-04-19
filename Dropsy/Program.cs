@@ -8,7 +8,7 @@ namespace Dropsy
         private static void Main(string[] args)
         {
             const int edgeLength = 7;
-            var model = new BoxModel(edgeLength);
+            var model = new BoxModel(edgeLength, new ChipFactory());
             var controller = new Controller(new ConsoleWrapper(), model);
             controller.Run();
         }

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Dropsy
@@ -5,12 +6,14 @@ namespace Dropsy
     public class BoxModel
     {
         public readonly int EdgeLength;
+        private readonly IChipFactory _chipFactory;
         private readonly List<List<IChip>> _rows;
         private IChip _unplacedChip;
 
-        public BoxModel(int edgeLength)
+        public BoxModel(int edgeLength, IChipFactory chipFactory)
         {
             EdgeLength = edgeLength;
+            _chipFactory = chipFactory;
 
             _rows = new List<List<IChip>>();
             for (var i = 0; i < EdgeLength; i++)
@@ -24,9 +27,9 @@ namespace Dropsy
             }
         }
 
-        public void AddChip()
+        public void AddUnplacedChip()
         {
-            _unplacedChip = Chip.CreateRandom(EdgeLength);
+            _unplacedChip = _chipFactory.Create(EdgeLength);
         }
 
         public IChip GetUnplacedChip()
@@ -34,7 +37,7 @@ namespace Dropsy
             return _unplacedChip;
         }
 
-        internal void AddChip(IChip chip)
+        internal void AddUnplacedChip(IChip chip)
         {
             _unplacedChip = chip;
         }
@@ -59,6 +62,11 @@ namespace Dropsy
         public List<IChip> GetRow(int row)
         {
             return _rows[row];
+        }
+
+        public bool GameOver()
+        {
+            return _rows.All(row => row.Count(chip => chip.HasValue()) == EdgeLength);
         }
     }
 }

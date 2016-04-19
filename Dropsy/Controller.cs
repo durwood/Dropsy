@@ -18,8 +18,10 @@ namespace Dropsy
         {
             do
             {
-                _model.AddChip();
+                _model.AddUnplacedChip();
                 Print();
+                if (_model.GameOver())
+                    break;
             } while (GetInput());
         }
 

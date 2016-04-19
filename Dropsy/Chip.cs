@@ -26,4 +26,17 @@ namespace Dropsy
             return _value != 0;
         }
     }
+
+    public class ChipFactory : IChipFactory
+    {
+        public IChip Create(int edgeLength)
+        {
+            return Chip.CreateRandom(edgeLength);
+        }
+    }
+
+    public interface IChipFactory
+    {
+        IChip Create(int edgeLength);
+    }
 }
