@@ -54,6 +54,7 @@
     <Compile Include="src\ConsoleWrapper.cs" />
     <Compile Include="src\IChip.cs" />
     <Compile Include="src\IConsoleWrapper.cs" />
+    <Compile Include="test\BoxModelExtensionsForTest.cs" />
     <Compile Include="test\BoxModelTests.cs" />
     <Compile Include="test\BoxPrinterTest.cs" />
     <Compile Include="test\ControllerTests.cs" />

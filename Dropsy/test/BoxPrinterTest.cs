@@ -111,12 +111,9 @@ namespace Dropsy.test
 
             IChip chip = new Chip(_edgeLength);
             _fakeChipFactory.Chip = chip;
-            _model.AddUnplacedChip();
-            _model.PutChipInColumn(1);
-            _model.AddUnplacedChip();
-            _model.PutChipInColumn(1);
-            _model.AddUnplacedChip();
-            _model.PutChipInColumn(0);
+            _model.PutChipOnBoard(1);
+            _model.PutChipOnBoard(1);
+            _model.PutChipOnBoard(0);
 
             expected += "\n";
             expected += "┌──────┐\n";
@@ -124,6 +121,31 @@ namespace Dropsy.test
             expected += "│ 2  2 │\n";
             expected += "└──────┘\n";
             expected += "  1  2  \n";
+
+            AssertSizeIsCorrect(_edgeLength, expected);
+        }
+
+        [Test]
+        public void AfterFourTurnsNoBoxes()
+        {
+            _edgeLength = 3;
+            CreateTestObj(_edgeLength);
+            var expected = "";
+
+            IChip chip = new Chip(_edgeLength);
+            _fakeChipFactory.Chip = chip;
+            _model.PutChipOnBoard(1);
+            _model.PutChipOnBoard(1);
+            _model.PutChipOnBoard(0);
+            _model.PutChipOnBoard(0);
+
+            expected += "\n";
+            expected += "┌─────────┐\n";
+            expected += "│         │\n";
+            expected += "│ 3  3    │\n";
+            expected += "│ 3  3    │\n";
+            expected += "└─────────┘\n";
+            expected += "  1  2  3  \n";
 
             AssertSizeIsCorrect(_edgeLength, expected);
         }
