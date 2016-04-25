@@ -8,9 +8,9 @@ namespace Dropsy
         private readonly IChipFactory _chipFactory;
         private readonly List<List<IChip>> _rows;
         public readonly int EdgeLength;
+        private bool _gameOver;
         private int _turnCount;
         private IChip _unplacedChip;
-        private bool _gameOver;
 
         public BoxModel(int edgeLength, IChipFactory chipFactory)
         {
@@ -77,6 +77,8 @@ namespace Dropsy
                 _rows[row][column] = _unplacedChip;
                 break;
             }
+
+            new ChipPopper().Pop(_rows);
 
             _unplacedChip = null;
         }

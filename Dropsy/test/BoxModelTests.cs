@@ -165,6 +165,15 @@ namespace Dropsy.test
             Assert.True(_testObj.GameOver());
         }
 
+        [Test]
+        public void PutChipInColumnPops1AtBottomRow()
+        {
+            var fakeChipFactory = new FakeChipFactory { Chip = new Chip(1) };
+            _testObj = new BoxModel(1, fakeChipFactory);
+            _testObj.PutChipOnBoard(0);
+            Assert.False(_testObj.GameOver());
+        }
+
         private void AssertRowHasCount(int row, int count)
         {
             Assert.That(_testObj.GetRow(row).Count(n => n.HasValue()), Is.EqualTo(count));
