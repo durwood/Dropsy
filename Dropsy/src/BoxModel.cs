@@ -64,10 +64,10 @@ namespace Dropsy
 
         public void PutChipInColumn(int column)
         {
-            AddBlocks();
-
             if (_rows[0][column].HasValue())
                 return;
+
+            AddBlocks();
 
             for (var row = EdgeLength - 1; row >= 0; row--)
             {

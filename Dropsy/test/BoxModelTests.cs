@@ -59,6 +59,19 @@ namespace Dropsy.test
             Assert.That(_testObj.GetRow(1)[1].print(), Is.EqualTo("6"));
         }
 
+        [Test] public void WhenColumnIsFullPlacingAChipDoesNotPlaceBlocks()
+        {
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(1);
+            _testObj.PutChipOnBoard(0);
+
+            AssertRowHasCount(0, 1);
+            AssertRowHasCount(1, 1);
+            AssertRowHasCount(2, 2);
+        }
+
         [Test]
         public void GameOverReturnsTrueWhenBoardIsFull()
         {
