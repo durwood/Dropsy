@@ -92,11 +92,26 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(2);
             _testObj.PutChipOnBoard(3);
             _testObj.PutChipOnBoard(4);
-
+            
             AssertRowHasCount(6, 7);
             AssertRowHasCount(5, 7);
             AssertRowHasCount(4, 5);
             AssertRowHasCount(3, 5);
+        }
+
+        [Test]
+        public void AddUnplacedChipPlacesRowOnBottomAfterTurnIsTaken()
+        {
+
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(1);
+            _testObj.PutChipOnBoard(2);
+            _testObj.PutChipOnBoard(0);
+            _testObj.AddUnplacedChip();
+
+            AssertRowHasCount(0, 0);
+            AssertRowHasCount(1, 1);
+            AssertRowHasCount(2, 3);
         }
 
         private void AssertRowHasCount(int row, int count)

@@ -35,10 +35,13 @@ namespace Dropsy
 
         public void AddUnplacedChip()
         {
-            _turnCount++;
             _unplacedChip = _chipFactory.Create(EdgeLength);
+        }
 
-            if (_turnCount % 5 == 0)
+        private void AddBlocks()
+        {
+            _turnCount++;
+            if (_turnCount%5 == 0)
                 AddBlocksToBottomRow();
         }
 
@@ -65,6 +68,8 @@ namespace Dropsy
 
         public void PutChipInColumn(int column)
         {
+            AddBlocks();
+
             for (var row = EdgeLength - 1; row >= 0; row--)
             {
                 if (_rows[row][column].HasValue()) continue;
