@@ -38,7 +38,7 @@ namespace Dropsy
             _turnCount++;
             _unplacedChip = _chipFactory.Create(EdgeLength);
 
-            if (_turnCount == 5)
+            if (_turnCount % 5 == 0)
                 AddBlocksToBottomRow();
         }
 

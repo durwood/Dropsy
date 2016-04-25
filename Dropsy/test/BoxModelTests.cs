@@ -64,7 +64,7 @@ namespace Dropsy.test
         }
 
         [Test]
-        public void AddUplacedChipPlacesBoxesOnBottomRowAfterFiveTurns()
+        public void AddUnplacedChipPlacesBoxesOnBottomRowAfterFiveTurns()
         {
             _testObj.PutChipOnBoard(0);
             _testObj.PutChipOnBoard(1);
@@ -75,6 +75,28 @@ namespace Dropsy.test
             AssertRowHasCount(0, 2);
             AssertRowHasCount(1, 3);
             AssertRowHasCount(2, 3);
+        }
+
+        [Test]
+        public void AddUnplacedChipPlacesRowOnBottomAfterMultiplesOfFive()
+        {
+            _testObj = new BoxModel(7, new ChipFactory());
+
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(1);
+            _testObj.PutChipOnBoard(2);
+            _testObj.PutChipOnBoard(3);
+            _testObj.PutChipOnBoard(4);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(1);
+            _testObj.PutChipOnBoard(2);
+            _testObj.PutChipOnBoard(3);
+            _testObj.PutChipOnBoard(4);
+
+            AssertRowHasCount(6, 7);
+            AssertRowHasCount(5, 7);
+            AssertRowHasCount(4, 5);
+            AssertRowHasCount(3, 5);
         }
 
         private void AssertRowHasCount(int row, int count)
