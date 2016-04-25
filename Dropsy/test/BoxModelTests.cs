@@ -32,6 +32,34 @@ namespace Dropsy.test
         }
 
         [Test]
+        public void FullColumnCanNotAcceptChips()
+        {
+            var fakeChipFactory = new FakeChipFactory {Chip = new Chip(5)};
+            _testObj = new BoxModel(2, fakeChipFactory);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(0);
+            fakeChipFactory.Chip = new Chip(6);
+            _testObj.PutChipOnBoard(0);
+
+            Assert.That(_testObj.GetRow(0).First().print(), Is.EqualTo("5"));
+        }
+
+        [Test]
+        public void WhenChipPlacedInFullColumnNextUnplacedChipIsNotRerolled()
+        {
+            var fakeChipFactory = new FakeChipFactory {Chip = new Chip(5)};
+            _testObj = new BoxModel(2, fakeChipFactory);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(0);
+            fakeChipFactory.Chip = new Chip(6);
+            _testObj.PutChipOnBoard(0);
+            fakeChipFactory.Chip = new Chip(7);
+            _testObj.PutChipOnBoard(1);
+
+            Assert.That(_testObj.GetRow(1)[1].print(), Is.EqualTo("6"));
+        }
+
+        [Test]
         public void GameOverReturnsTrueWhenBoardIsFull()
         {
             _testObj = new BoxModel(1, new ChipFactory());
