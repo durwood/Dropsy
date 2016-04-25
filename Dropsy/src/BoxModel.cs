@@ -10,6 +10,7 @@ namespace Dropsy
         public readonly int EdgeLength;
         private int _turnCount;
         private IChip _unplacedChip;
+        private bool _gameOver;
 
         public BoxModel(int edgeLength, IChipFactory chipFactory)
         {
@@ -54,6 +55,7 @@ namespace Dropsy
 
         private void RemoveTopRow()
         {
+            _gameOver = _rows[0].Count(n => n.HasValue()) > 0;
             _rows.RemoveAt(0);
         }
 
@@ -91,7 +93,7 @@ namespace Dropsy
 
         public bool GameOver()
         {
-            return _rows.All(row => row.Count(chip => chip.HasValue()) == EdgeLength);
+            return _rows.All(row => row.Count(chip => chip.HasValue()) == EdgeLength) || _gameOver;
         }
     }
 }

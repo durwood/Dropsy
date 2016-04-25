@@ -143,7 +143,6 @@ namespace Dropsy.test
         [Test]
         public void AddUnplacedChipPlacesRowOnBottomAfterTurnIsTaken()
         {
-
             _testObj.PutChipOnBoard(0);
             _testObj.PutChipOnBoard(1);
             _testObj.PutChipOnBoard(2);
@@ -153,6 +152,17 @@ namespace Dropsy.test
             AssertRowHasCount(0, 0);
             AssertRowHasCount(1, 1);
             AssertRowHasCount(2, 3);
+        }
+
+        [Test]
+        public void GameOverReturnsTrueWhenValuesArePushedOffBox()
+        {
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(1);
+            _testObj.PutChipOnBoard(1);
+            Assert.True(_testObj.GameOver());
         }
 
         private void AssertRowHasCount(int row, int count)
