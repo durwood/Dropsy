@@ -149,6 +149,32 @@ namespace Dropsy.test
 
             AssertSizeIsCorrect(_edgeLength, expected);
         }
+
+        [Test]
+        public void AfterFiveTurnsThereAreBoxesOnLowestRow()
+        {
+            _edgeLength = 3;
+            CreateTestObj(_edgeLength);
+            var expected = "";
+
+            IChip chip = new Chip(_edgeLength);
+            _fakeChipFactory.Chip = chip;
+            _model.PutChipOnBoard(2);
+            _model.PutChipOnBoard(1);
+            _model.PutChipOnBoard(1);
+            _model.PutChipOnBoard(0);
+            _model.PutChipOnBoard(0);
+
+            expected += "\n";
+            expected += "┌─────────┐\n";
+            expected += "│ 3  3    │\n";
+            expected += "│ 3  3  3 │\n";
+            expected += "│ █  █  █ │\n";
+            expected += "└─────────┘\n";
+            expected += "  1  2  3  \n";
+
+            AssertSizeIsCorrect(_edgeLength, expected);
+        }
     }
 
     public class FakeChipFactory : IChipFactory

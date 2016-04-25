@@ -9,6 +9,7 @@ namespace Dropsy
         private readonly IChipFactory _chipFactory;
         private readonly List<List<IChip>> _rows;
         private IChip _unplacedChip;
+        private int _turnCount;
 
         public BoxModel(int edgeLength, IChipFactory chipFactory)
         {
@@ -18,18 +19,38 @@ namespace Dropsy
             _rows = new List<List<IChip>>();
             for (var i = 0; i < EdgeLength; i++)
             {
-                var chips = new List<IChip>();
-                _rows.Add(chips);
-                for (var j = 0; j < EdgeLength; j++)
-                {
-                    chips.Add(new Chip(0));
-                }
+                AddChipsToBottom(new Chip(0));
+            }
+        }
+
+        private void AddChipsToBottom(IChip chip)
+        {
+            var chips = new List<IChip>();
+            _rows.Add(chips);
+            for (var j = 0; j < EdgeLength; j++)
+            {
+                chips.Add(chip);
             }
         }
 
         public void AddUnplacedChip()
         {
+            _turnCount++;
             _unplacedChip = _chipFactory.Create(EdgeLength);
+
+            if (_turnCount == 5)
+                AddBlocksToBottomRow();
+        }
+
+        private void AddBlocksToBottomRow()
+        {
+            RemoveTopRow();
+            AddChipsToBottom(new BlockChip());
+        }
+
+        private void RemoveTopRow()
+        {
+            _rows.RemoveAt(0);
         }
 
         public IChip GetUnplacedChip()

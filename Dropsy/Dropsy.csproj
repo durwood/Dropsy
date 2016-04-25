@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlockChip.cs" />
     <Compile Include="Chip.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Program.cs" />

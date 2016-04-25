@@ -49,7 +49,7 @@ namespace Dropsy.test
         public void HasChipInAndPutChipInEndToEnd()
         {
             _testObj.PutChipOnBoard(2);
-            HasChipInRow(2);
+            AssertRowHasCount(2, 1);
         }
 
         [Test]
@@ -59,13 +59,27 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(1);
             _testObj.PutChipOnBoard(1);
 
-            HasChipInRow(1);
+            AssertRowHasCount(1, 1);
             Assert.That(_testObj.GetRow(0).Count(n => n.print() != " "), Is.EqualTo(1));
         }
 
-        private void HasChipInRow(int row)
+        [Test]
+        public void AddUplacedChipPlacesBoxesOnBottomRowAfterFiveTurns()
         {
-            Assert.That(_testObj.GetRow(row).Count(n => n.print() != " "), Is.EqualTo(1));
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(1);
+            _testObj.PutChipOnBoard(2);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(1);
+
+            AssertRowHasCount(0, 2);
+            AssertRowHasCount(1, 3);
+            AssertRowHasCount(2, 3);
+        }
+
+        private void AssertRowHasCount(int row, int count)
+        {
+            Assert.That(_testObj.GetRow(row).Count(n => n.HasValue()), Is.EqualTo(count));
         }
     }
 }   
