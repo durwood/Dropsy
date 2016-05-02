@@ -75,8 +75,11 @@ namespace Dropsy.test
         [Test]
         public void GameOverReturnsTrueWhenBoardIsFull()
         {
-            _testObj = new BoxModel(1, new ChipFactory());
+            _testObj = new BoxModel(2, new ChipFactory());
             _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(1);
+            _testObj.PutChipOnBoard(1);
             Assert.True(_testObj.GameOver());
         }
 
