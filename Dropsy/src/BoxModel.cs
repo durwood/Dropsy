@@ -5,6 +5,8 @@ namespace Dropsy
 {
     public class BoxModel
     {
+        private const int TurnsBettweenBlocks = 5;
+        private readonly Board _board;
         private readonly IChipFactory _chipFactory;
         private readonly List<List<IChip>> _rows;
         public readonly int EdgeLength;
@@ -16,22 +18,7 @@ namespace Dropsy
         {
             EdgeLength = edgeLength;
             _chipFactory = chipFactory;
-
-            _rows = new List<List<IChip>>();
-            for (var i = 0; i < EdgeLength; i++)
-            {
-                AddChipsToBottom(new Chip(0));
-            }
-        }
-
-        private void AddChipsToBottom(IChip chip)
-        {
-            var chips = new List<IChip>();
-            _rows.Add(chips);
-            for (var j = 0; j < EdgeLength; j++)
-            {
-                chips.Add(chip);
-            }
+            _board = new Board(edgeLength);
         }
 
         public void AddUnplacedChip()
@@ -43,20 +30,20 @@ namespace Dropsy
         private void AddBlocks()
         {
             _turnCount++;
-            if (_turnCount%5 == 0)
+            if (_turnCount%TurnsBettweenBlocks == 0)
                 AddBlocksToBottomRow();
         }
 
         private void AddBlocksToBottomRow()
         {
             RemoveTopRow();
-            AddChipsToBottom(new BlockChip());
+            _board.AddChipsToBottom(new BlockChip());
         }
 
         private void RemoveTopRow()
         {
-            _gameOver = _rows[0].Count(n => n.HasValue()) > 0;
-            _rows.RemoveAt(0);
+            _gameOver = _board.GetRow(0).Count(n => n.HasValue()) > 0;
+            _board.RemoveTopRow();
         }
 
         public IChip GetUnplacedChip()
@@ -66,21 +53,32 @@ namespace Dropsy
 
         public void PutChipInColumn(int column)
         {
-            if (_rows[0][column].HasValue())
+            var chip = _board.GetChip(0, column);
+            if (chip.HasValue())
                 return;
 
             AddBlocks();
+            PutChipAtTopOfColumn(_unplacedChip, column);
 
-            for (var row = EdgeLength - 1; row >= 0; row--)
-            {
-                if (_rows[row][column].HasValue()) continue;
-                _rows[row][column] = _unplacedChip;
-                break;
-            }
-
-            new ChipPopper().Pop(_rows);
+            new ChipPopper().Pop(_board);
 
             _unplacedChip = null;
+        }
+
+        private void PutChipAtTopOfColumn(IChip unplacedChip, int columnIndex)
+        {
+            var column = _board.GetColumn(columnIndex);
+            column.Reverse();
+            var rowIndex = EdgeLength;
+            foreach (var chip in column)
+            {
+                rowIndex--;
+                if (!chip.HasValue())
+                {
+                    _board.PlaceChip(rowIndex, columnIndex, unplacedChip);
+                    break;
+                }
+            }
         }
 
         public bool HasNoUnplacedChip()
@@ -90,12 +88,13 @@ namespace Dropsy
 
         public List<IChip> GetRow(int row)
         {
-            return _rows[row];
+            return _board.GetRow(row);
         }
 
         public bool GameOver()
         {
-            return _rows.All(row => row.Count(chip => chip.HasValue()) == EdgeLength) || _gameOver;
+            var allChips = _board.All();
+            return allChips.All(chip => chip.HasValue()) || _gameOver;
         }
     }
 }

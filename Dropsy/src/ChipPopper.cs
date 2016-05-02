@@ -4,10 +4,11 @@ namespace Dropsy
 {
     public class ChipPopper
     {
-        public void Pop(List<List<IChip>> board)
+        public void Pop(Board board)
         {
-            if (board.Count == 1 && board[0][0].print() == "1")
-                board[0][0] = new Chip(0);
+
+            if (board.All().Count == 1 && board.GetChip(0,0).print() == "1")
+                board.PlaceChip(0, 0, new Chip(0));
         }
     }
 }
