@@ -6,8 +6,7 @@ namespace Dropsy
     {
         public void Pop(Board board)
         {
-
-            if (board.All().Count == 1 && board.GetChip(0,0).print() == "1")
+            if (board.GetChip(0,0).print() == "1")
                 board.PlaceChip(0, 0, new Chip(0));
         }
     }

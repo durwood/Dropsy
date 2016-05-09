@@ -18,7 +18,7 @@ namespace Dropsy.test
 
         private void CreateTestObj(int edgeLength)
         {
-            _boxModel = new BoxModel(edgeLength, new ChipFactory());
+            _boxModel = new BoxModel(edgeLength, new UnpoppableChipFactory(), new Board(edgeLength));
             _consoleWrapper = new TestConsole();
             _testObj = new Controller(_consoleWrapper, _boxModel);
         }
@@ -43,7 +43,6 @@ namespace Dropsy.test
             _consoleWrapper.NextChar = new[] {'1', '2', '1', 'q'};
             _testObj.Run();
             Assert.That(_consoleWrapper.NumReads, Is.EqualTo(4));
-            Assert.True(HasChipIn(0));
             Assert.True(HasChipIn(1));
         }
 

@@ -14,11 +14,11 @@ namespace Dropsy
         private int _turnCount;
         private IChip _unplacedChip;
 
-        public BoxModel(int edgeLength, IChipFactory chipFactory)
+        public BoxModel(int edgeLength, IChipFactory chipFactory, Board board)
         {
             EdgeLength = edgeLength;
             _chipFactory = chipFactory;
-            _board = new Board(edgeLength);
+            _board = board;
         }
 
         public void AddUnplacedChip()
@@ -30,8 +30,13 @@ namespace Dropsy
         private void AddBlocks()
         {
             _turnCount++;
-            if (_turnCount%TurnsBettweenBlocks == 0)
+            if (IsTurnToAddBlocks())
                 AddBlocksToBottomRow();
+        }
+
+        private bool IsTurnToAddBlocks()
+        {
+            return _turnCount%TurnsBettweenBlocks == 0;
         }
 
         private void AddBlocksToBottomRow()

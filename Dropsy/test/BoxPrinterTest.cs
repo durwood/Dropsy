@@ -9,6 +9,7 @@ namespace Dropsy.test
         private  BoxPrinter _printer;
         private  int _edgeLength;
         private FakeChipFactory _fakeChipFactory;
+        private Board _board;
 
         private void AssertSizeIsCorrect(int edgeLength, string expected)
         {
@@ -19,7 +20,8 @@ namespace Dropsy.test
         public void CreateTestObj(int edgeLength)
         {
             _fakeChipFactory = new FakeChipFactory();
-            _model = new BoxModel(edgeLength, _fakeChipFactory);
+            _board = new Board(edgeLength);
+            _model = new BoxModel(edgeLength, _fakeChipFactory, _board);
             _printer = new BoxPrinter(_model);
         }
 
@@ -184,6 +186,14 @@ namespace Dropsy.test
         public IChip Create(int edgeLength)
         {
             return Chip;
+        }
+    }
+
+    public class UnpoppableChipFactory : IChipFactory
+    {
+        public IChip Create(int edgeLength)
+        {
+            return new BlockChip();
         }
     }
 }
