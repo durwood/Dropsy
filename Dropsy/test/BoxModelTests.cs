@@ -112,7 +112,7 @@ namespace Dropsy.test
         [Test]
         public void GameOverReturnsTrueWhenBoardIsFull()
         {
-            var board = new BoardTestFactory(2).Create(new List<int>{1, 1, 1, 1});
+            var board = new BoardTestFactory(2).Create(new List<int> {1, 1, 1, 1});
             _testObj = new BoxModel(2, new ChipFactory(), board);
             Assert.True(_testObj.GameOver());
         }
@@ -194,9 +194,13 @@ namespace Dropsy.test
         public Board Create(List<int> values)
         {
             var board = new Board(_edgeLength);
-            for (int i = 0; i < _edgeLength*_edgeLength; i++)
+            for (var i = 0; i < _edgeLength*_edgeLength; i++)
             {
-                board.PlaceChip(GetRow(i), GetColumn(i), new Chip(values[i]));
+                IChip chip = new Chip(values[i]);
+                if (values[i] == -1)
+                    chip = new BlockChip();
+
+                board.PlaceChip(GetRow(i), GetColumn(i), chip);
             }
             return board;
         }

@@ -70,10 +70,44 @@ namespace Dropsy
         [Test]
         public void ChipsMustBeNeighborsToBeConsideredForPopping()
         {
-            var board = new BoardTestFactory(3).Create(new List<int>() { 0, 0, 0, 0, 0, 0, 2, 0, 2 });
+            var board = new BoardTestFactory(3).Create(new List<int>()
+            {
+                0, 0, 0,
+                0, 0, 0,
+                2, 0, 2
+            });
             _testObj.PopChips(board);
             Assert.True(board.GetChip(2, 0).HasValue());
             Assert.True(board.GetChip(2, 2).HasValue());
+        }
+
+        [Test]
+        public void ChipsThatAreNotNeigborsCountTheWholeRow()
+        {
+            var board = new BoardTestFactory(4).Create(new List<int>() {
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                2, 2, 0, 1
+            });
+            _testObj.PopChips(board);
+            Assert.False(board.GetChip(3, 0).HasValue());
+            Assert.False(board.GetChip(3, 1).HasValue());
+            Assert.False(board.GetChip(3, 3).HasValue());
+        }
+
+        [Test]
+        public void ChipsThatArBlocksAreConsideredContiguous()
+        {
+            var board = new BoardTestFactory(3).Create(new List<int>() {
+                0, 0, 0, 
+                0, 0, 0, 
+                3, -1, 3
+            });
+            _testObj.PopChips(board);
+            Assert.False(board.GetChip(2, 0).HasValue());
+            Assert.True(board.GetChip(2, 1).HasValue());
+            Assert.False(board.GetChip(2, 2).HasValue());
         }
     }
 }
