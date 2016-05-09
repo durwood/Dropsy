@@ -180,6 +180,12 @@ namespace Dropsy.test
             AssertRowHasCount(1, 1);
             AssertRowHasCount(2, 2);
         }
+
+        [Test]
+        public void AfterPoppingChipsFall()
+        {
+            Assert.True(false);
+        }
     }
 
     public class BoardTestFactory
