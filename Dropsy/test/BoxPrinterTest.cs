@@ -111,7 +111,7 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
             var expected = "";
 
-            IChip chip = new Chip(_edgeLength);
+            IChip chip = new Chip(5);
             _fakeChipFactory.Chip = chip;
             _model.PutChipOnBoard(1);
             _model.PutChipOnBoard(1);
@@ -119,8 +119,8 @@ namespace Dropsy.test
 
             expected += "\n";
             expected += "┌──────┐\n";
-            expected += "│    2 │\n";
-            expected += "│ 2  2 │\n";
+            expected += "│    5 │\n";
+            expected += "│ 5  5 │\n";
             expected += "└──────┘\n";
             expected += "  1  2  \n";
 
@@ -159,7 +159,7 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
             var expected = "";
 
-            IChip chip = new Chip(_edgeLength);
+            IChip chip = new Chip(5);
             _fakeChipFactory.Chip = chip;
             _model.PutChipOnBoard(2);
             _model.PutChipOnBoard(1);
@@ -169,8 +169,8 @@ namespace Dropsy.test
 
             expected += "\n";
             expected += "┌─────────┐\n";
-            expected += "│ 3  3    │\n";
-            expected += "│ 3  3  3 │\n";
+            expected += "│ 5  5    │\n";
+            expected += "│ 5  5  5 │\n";
             expected += "│ █  █  █ │\n";
             expected += "└─────────┘\n";
             expected += "  1  2  3  \n";

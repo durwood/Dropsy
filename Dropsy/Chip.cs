@@ -30,6 +30,8 @@ namespace Dropsy
         {
             _value = 0;
         }
+
+        public int Value => _value;
     }
 
     public class ChipFactory : IChipFactory

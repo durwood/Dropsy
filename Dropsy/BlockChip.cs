@@ -15,5 +15,7 @@
         public void Pop()
         {
         }
+
+        public int Value => -1;
     }
 }

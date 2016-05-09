@@ -6,12 +6,31 @@ namespace Dropsy
     {
         public void PopChips(Board board)
         {
-            foreach (var chip in board.All())
+            for (int i = 0; i < board.EdgeLength; i++)
             {
-                if (chip.print() == "1")
+                PopChipSet(board.GetRow(i));
+                PopChipSet(board.GetColumn(i));
+            }
+        }
+
+        private static void PopChipSet(IReadOnlyCollection<IChip> chipSet)
+        {
+            foreach (var chip in chipSet)
+            {
+                if (chip.Value == FindRealChipCount(chipSet))
                     chip.Pop();
             }
+        }
 
+        private static int FindRealChipCount(IReadOnlyCollection<IChip> chipSet)
+        {
+            var findRealChipCount = 0;
+            foreach (var chip in chipSet)
+            {
+                if (chip.HasValue())
+                    findRealChipCount++;
+            }
+            return findRealChipCount;
         }
     }
 }

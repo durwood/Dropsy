@@ -5,13 +5,13 @@ namespace Dropsy
 {
     public class Board
     {
-        private readonly int _edgeLength;
+        public readonly int EdgeLength;
         public List<List<IChip>> _rows;
 
         public Board(int edgeLength)
         {
             _rows = new List<List<IChip>>();
-            _edgeLength = edgeLength;
+            EdgeLength = edgeLength;
             for (var i = 0; i < edgeLength; i++)
             {
                 AddChipsToBottom(new Chip(0));
@@ -22,7 +22,7 @@ namespace Dropsy
         {
             var chips = new List<IChip>();
             _rows.Add(chips);
-            for (var j = 0; j < _edgeLength; j++)
+            for (var j = 0; j < EdgeLength; j++)
             {
                 chips.Add(chip);
             }
@@ -64,6 +64,16 @@ namespace Dropsy
         public List<IChip> All()
         {
             return _rows.SelectMany(r => r).ToList();
+        }
+
+        public int GetColumnCount()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public object GetRowCount()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
