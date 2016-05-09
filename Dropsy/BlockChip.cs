@@ -11,5 +11,9 @@
         {
             return true;
         }
+
+        public void Pop()
+        {
+        }
     }
 }

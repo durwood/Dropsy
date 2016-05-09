@@ -38,7 +38,7 @@ namespace Dropsy.test
         [Test]
         public void AddUnplacedChipPlacesRowOnBottomAfterMultiplesOfFive()
         {
-            _testObj = new BoxModel(7, new ChipFactory(), new Board(7));
+            _testObj = new BoxModel(7, new UnpoppableChipFactory(), new Board(7));
 
             _testObj.PutChipOnBoard(0);
             _testObj.PutChipOnBoard(1);
@@ -144,7 +144,7 @@ namespace Dropsy.test
         [Test]
         public void TwoChipsCanGoInSameColumn()
         {
-            _testObj = new BoxModel(2, new ChipFactory(), new Board(2));
+            _testObj = new BoxModel(2, new UnpoppableChipFactory(), new Board(2));
             _testObj.PutChipOnBoard(1);
             _testObj.PutChipOnBoard(1);
 

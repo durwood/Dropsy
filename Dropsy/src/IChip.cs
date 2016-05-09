@@ -4,5 +4,6 @@
     {
         string print();
         bool HasValue();
+        void Pop();
     }
 }

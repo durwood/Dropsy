@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace Dropsy
@@ -19,7 +20,7 @@ namespace Dropsy
             var board = new Board(1);
             board.PlaceChip(0,0, new Chip(1));
 
-            _testObj.Pop(board);
+            _testObj.PopChips(board);
 
             Assert.False(board.GetChip(0,0).HasValue());
         }
@@ -28,11 +29,20 @@ namespace Dropsy
         public void ChipOfValueOnePopsOnABigBoard()
         {
             var board = new Board(3);
-            board.PlaceChip(0, 0, new Chip(1));
 
-            _testObj.Pop(board);
+            for (int row = 0; row < 3; row++)
+            {
+                for(int column = 0; column < 3; column++)
+                {
+                    board.PlaceChip(row, column, new Chip(1));
+                    _testObj.PopChips(board);
+                    Assert.False(board.GetChip(row, column).HasValue());
+                }
+            }
 
-            Assert.False(board.GetChip(0, 0).HasValue());
+
+
+
 
         }
     }

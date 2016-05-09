@@ -4,7 +4,7 @@ namespace Dropsy
 {
     public class Chip : IChip
     {
-        private readonly int _value;
+        private int _value;
 
         public Chip(int value)
         {
@@ -24,6 +24,11 @@ namespace Dropsy
         public bool HasValue()
         {
             return _value != 0;
+        }
+
+        public void Pop()
+        {
+            _value = 0;
         }
     }
 
