@@ -66,5 +66,14 @@ namespace Dropsy
                 Assert.False(chip.HasValue());
             }
         }
+
+        [Test]
+        public void ChipsMustBeNeighborsToBeConsideredForPopping()
+        {
+            var board = new BoardTestFactory(3).Create(new List<int>() { 0, 0, 0, 0, 0, 0, 2, 0, 2 });
+            _testObj.PopChips(board);
+            Assert.True(board.GetChip(2, 0).HasValue());
+            Assert.True(board.GetChip(2, 2).HasValue());
+        }
     }
 }

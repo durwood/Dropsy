@@ -9,32 +9,46 @@ namespace Dropsy
             var chipsToPop = new List<IChip>();
             for (var i = 0; i < board.EdgeLength; i++)
             {
-                PopChipSet(board.GetRow(i), chipsToPop);
-                PopChipSet(board.GetColumn(i), chipsToPop);
+                    PopChipSet(board.GetRow(i), chipsToPop);
+                    PopChipSet(board.GetColumn(i), chipsToPop);
             }
 
             foreach (var chip in chipsToPop)
                 chip.Pop();
         }
 
-        private static void PopChipSet(IReadOnlyCollection<IChip> chipSet, IList<IChip> chipsToPop)
+        private IList<List<IChip>> Split(IList<IChip> chips)
         {
-            foreach (var chip in chipSet)
-            {
-                if (chip.Value == FindRealChipCount(chipSet))
-                    chipsToPop.Add(chip);
-            }
-        }
+            var chipSets = new List<List<IChip>>();
+            var chipSet = new List<IChip>();
 
-        private static int FindRealChipCount(IReadOnlyCollection<IChip> chipSet)
-        {
-            var findRealChipCount = 0;
-            foreach (var chip in chipSet)
+            foreach (var chip in chips)
             {
                 if (chip.HasValue())
-                    findRealChipCount++;
+                    chipSet.Add(chip);
+                else
+                {
+                    if (chipSet.Count <= 0) continue;
+                    chipSets.Add(chipSet);
+                    chipSet = new List<IChip>();
+                }
             }
-            return findRealChipCount;
+
+            chipSets.Add(chipSet);
+
+            return chipSets;
+        }
+
+        private void PopChipSet(IList<IChip> chipSet, IList<IChip> chipsToPop)
+        {
+            foreach (var chips in Split(chipSet))
+            {
+                foreach (var chip in chips)
+                {
+                    if (chip.Value == chips.Count)
+                        chipsToPop.Add(chip);
+                }
+            }
         }
     }
 }

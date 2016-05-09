@@ -203,12 +203,12 @@ namespace Dropsy.test
 
         private int GetColumn(int i)
         {
-            return i/_edgeLength;
+            return i%_edgeLength;
         }
 
         private int GetRow(int i)
         {
-            return i%_edgeLength;
+            return i/_edgeLength;
         }
     }
 }
