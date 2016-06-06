@@ -31,8 +31,7 @@ namespace Dropsy.test
             _edgeLength = 1;
             CreateTestObj(_edgeLength);
 
-            IChip chip = new Chip(_edgeLength);
-            _fakeChipFactory.Chip = chip;
+            _fakeChipFactory.ChipValue = _edgeLength;
             _model.AddUnplacedChip();
 
             var expected = "";
@@ -51,8 +50,7 @@ namespace Dropsy.test
             _edgeLength = 2;
             CreateTestObj(_edgeLength);
 
-            IChip chip = new Chip(_edgeLength);
-            _fakeChipFactory.Chip = chip;
+            _fakeChipFactory.ChipValue = _edgeLength;
             _model.AddUnplacedChip();
 
             var expected = "";
@@ -72,8 +70,8 @@ namespace Dropsy.test
             _edgeLength = 2;
             CreateTestObj(_edgeLength);
 
-            IChip chip = new Chip(_edgeLength);
-            _fakeChipFactory.Chip = chip;
+            _fakeChipFactory.ChipValue = _edgeLength;
+
             _model.AddUnplacedChip();
             _model.PutChipInColumn(1);
 
@@ -111,8 +109,7 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
             var expected = "";
 
-            IChip chip = new Chip(5);
-            _fakeChipFactory.Chip = chip;
+            _fakeChipFactory.ChipValue = 5;
             _model.PutChipOnBoard(1);
             _model.PutChipOnBoard(1);
             _model.PutChipOnBoard(0);
@@ -134,8 +131,7 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
             var expected = "";
 
-            IChip chip = new Chip(_edgeLength);
-            _fakeChipFactory.Chip = chip;
+            _fakeChipFactory.ChipValue = _edgeLength;
             _model.PutChipOnBoard(1);
             _model.PutChipOnBoard(1);
             _model.PutChipOnBoard(0);
@@ -159,8 +155,7 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
             var expected = "";
 
-            IChip chip = new Chip(5);
-            _fakeChipFactory.Chip = chip;
+            _fakeChipFactory.ChipValue = 5;
             _model.PutChipOnBoard(2);
             _model.PutChipOnBoard(1);
             _model.PutChipOnBoard(1);
@@ -181,11 +176,11 @@ namespace Dropsy.test
 
     public class FakeChipFactory : IChipFactory
     {
-        public IChip Chip;
+        public int ChipValue;
 
         public IChip Create(int edgeLength)
         {
-            return Chip;
+            return new Chip(ChipValue);
         }
     }
 

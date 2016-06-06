@@ -53,6 +53,7 @@
     <Compile Include="src\Board.cs" />
     <Compile Include="src\BoxModel.cs" />
     <Compile Include="src\BoxPrinter.cs" />
+    <Compile Include="src\ChipDropper.cs" />
     <Compile Include="src\ChipPopper.cs" />
     <Compile Include="src\ChipPopperTests.cs" />
     <Compile Include="src\ConsoleWrapper.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="test\BoxModelExtensionsForTest.cs" />
     <Compile Include="test\BoxModelTests.cs" />
     <Compile Include="test\BoxPrinterTest.cs" />
+    <Compile Include="test\ChipDropperTests.cs" />
     <Compile Include="test\ControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>

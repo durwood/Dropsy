@@ -6,7 +6,7 @@ namespace Dropsy
     public class Board
     {
         public readonly int EdgeLength;
-        public List<List<IChip>> _rows;
+        private readonly List<List<IChip>> _rows;
 
         public Board(int edgeLength)
         {
@@ -66,14 +66,17 @@ namespace Dropsy
             return _rows.SelectMany(r => r).ToList();
         }
 
-        public int GetColumnCount()
+        public void SetColumn(int columnIndex, List<IChip> column)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public object GetRowCount()
-        {
-            throw new System.NotImplementedException();
+            var rowIndex = _rows.Count - 1;
+            foreach (var row in _rows)
+            {
+                if (rowIndex >= column.Count)
+                    row[columnIndex] = new Chip(0);
+                else
+                    row[columnIndex] = column[rowIndex];
+                rowIndex--;
+            }
         }
     }
 }

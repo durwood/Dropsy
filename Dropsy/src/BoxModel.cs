@@ -8,7 +8,6 @@ namespace Dropsy
         private const int TurnsBettweenBlocks = 5;
         private readonly Board _board;
         private readonly IChipFactory _chipFactory;
-        private readonly List<List<IChip>> _rows;
         public readonly int EdgeLength;
         private bool _gameOver;
         private int _turnCount;
@@ -66,6 +65,7 @@ namespace Dropsy
             PutChipAtTopOfColumn(_unplacedChip, column);
 
             new ChipPopper().PopChips(_board);
+            //new ChipDropper().DropChips(_board);
 
             _unplacedChip = null;
         }

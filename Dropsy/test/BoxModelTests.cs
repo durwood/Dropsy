@@ -74,7 +74,7 @@ namespace Dropsy.test
         [Test]
         public void ChipsCanBePopped()
         {
-            var fakeChipFactory = new FakeChipFactory {Chip = new Chip(1)};
+            var fakeChipFactory = new FakeChipFactory {ChipValue = 1};
             _testObj = new BoxModel(1, fakeChipFactory, new Board(1));
             _testObj.PutChipOnBoard(0);
             Assert.False(_testObj.GameOver());
@@ -83,14 +83,20 @@ namespace Dropsy.test
         [Test]
         public void FullColumnCanNotAcceptChips()
         {
-            var fakeChipFactory = new FakeChipFactory {Chip = new Chip(5)};
-            _testObj = new BoxModel(2, fakeChipFactory, new Board(2));
+            var fakeChipFactory = CreateTestObjWithChip(5, 2);
             _testObj.PutChipOnBoard(0);
             _testObj.PutChipOnBoard(0);
-            fakeChipFactory.Chip = new Chip(6);
+            fakeChipFactory.ChipValue = 6;
             _testObj.PutChipOnBoard(0);
 
             Assert.That(_testObj.GetRow(0).First().print(), Is.EqualTo("5"));
+        }
+
+        private FakeChipFactory CreateTestObjWithChip(int chipValue, int edgeLength)
+        {
+            var fakeChipFactory = new FakeChipFactory {ChipValue = chipValue};
+            _testObj = new BoxModel(edgeLength, fakeChipFactory, new Board(edgeLength));
+            return fakeChipFactory;
         }
 
         [Test]
@@ -155,13 +161,13 @@ namespace Dropsy.test
         [Test]
         public void WhenChipPlacedInFullColumnNextUnplacedChipIsNotRerolled()
         {
-            var fakeChipFactory = new FakeChipFactory {Chip = new Chip(5)};
+            var fakeChipFactory = new FakeChipFactory {ChipValue = 5};
             _testObj = new BoxModel(2, fakeChipFactory, new Board(2));
             _testObj.PutChipOnBoard(0);
             _testObj.PutChipOnBoard(0);
-            fakeChipFactory.Chip = new Chip(6);
+            fakeChipFactory.ChipValue = 6;
             _testObj.PutChipOnBoard(0);
-            fakeChipFactory.Chip = new Chip(7);
+            fakeChipFactory.ChipValue = 7;
             _testObj.PutChipOnBoard(1);
 
             Assert.That(_testObj.GetRow(1)[1].print(), Is.EqualTo("6"));
@@ -184,7 +190,15 @@ namespace Dropsy.test
         [Test]
         public void AfterPoppingChipsFall()
         {
-            Assert.True(false);
+            CreateTestObjWithChip(3, 3);
+
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(0);
+            _testObj.PutChipOnBoard(1);
+            _testObj.PutChipOnBoard(2);
+
+            AssertRowHasCount(1, 1);
+            AssertRowHasCount(2, 0);
         }
     }
 

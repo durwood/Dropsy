@@ -109,5 +109,20 @@ namespace Dropsy
             Assert.True(board.GetChip(2, 1).HasValue());
             Assert.False(board.GetChip(2, 2).HasValue());
         }
+
+        [Test]
+        public void TestA()
+        {
+            var board = new BoardTestFactory(3).Create(new List<int>() {
+                0, 0, 0,
+                3, 0, 0,
+                3, 3, 3
+            });
+            _testObj.PopChips(board);
+            Assert.True(board.GetChip(1, 0).HasValue());
+            Assert.False(board.GetChip(2, 0).HasValue());
+            Assert.False(board.GetChip(2, 1).HasValue());
+            Assert.False(board.GetChip(2, 2).HasValue());
+        }
     }
 }
