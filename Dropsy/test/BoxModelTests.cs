@@ -197,8 +197,8 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(1);
             _testObj.PutChipOnBoard(2);
 
-            AssertRowHasCount(1, 1);
-            AssertRowHasCount(2, 0);
+            AssertRowHasCount(2, 1);
+            AssertRowHasCount(1, 0);
         }
     }
 

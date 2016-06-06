@@ -65,7 +65,7 @@ namespace Dropsy
             PutChipAtTopOfColumn(_unplacedChip, column);
 
             new ChipPopper().PopChips(_board);
-            //new ChipDropper().DropChips(_board);
+            new ChipDropper().DropChips(_board);
 
             _unplacedChip = null;
         }
