@@ -1,7 +1,4 @@
-﻿using System;
-using Dropsy.test;
-
-namespace Dropsy
+﻿namespace Dropsy
 {
     public class Controller
     {
@@ -18,20 +15,20 @@ namespace Dropsy
         {
             do
             {
-                _model.AddUnplacedChip();
+                _model.Advance();
                 Print();
-                if (_model.GameOver())
-                    break;
-            } while (GetInput());
+                if (_model.CanReceiveInput())
+                    GetInput();
+            } while (!_model.GameOver());
         }
 
-        private bool GetInput()
+        private void GetInput()
         {
             var input = _console.Read();
             if (input == 'q')
-                return false;
-            _model.PutChipInColumn(GetSelectedColumn(input));
-            return true;
+                _model.Halt();
+            else
+                _model.PutChipInColumn(GetSelectedColumn(input));
         }
 
         private void Print()

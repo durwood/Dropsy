@@ -4,7 +4,7 @@
     {
         internal static void PutChipOnBoard(this BoxModel model, int column)
         {
-            model.AddUnplacedChip();
+            model.Advance();
             model.PutChipInColumn(column);
         }
     }

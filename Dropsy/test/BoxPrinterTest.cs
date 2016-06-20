@@ -32,7 +32,7 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
 
             _fakeChipFactory.ChipValue = _edgeLength;
-            _model.AddUnplacedChip();
+            _model.Advance();
 
             var expected = "";
             expected += "  1  \n";
@@ -51,7 +51,7 @@ namespace Dropsy.test
             CreateTestObj(_edgeLength);
 
             _fakeChipFactory.ChipValue = _edgeLength;
-            _model.AddUnplacedChip();
+            _model.Advance();
 
             var expected = "";
             expected += "    2   \n";
@@ -72,7 +72,7 @@ namespace Dropsy.test
 
             _fakeChipFactory.ChipValue = _edgeLength;
 
-            _model.AddUnplacedChip();
+            _model.Advance();
             _model.PutChipInColumn(1);
 
             var expected = "\n";

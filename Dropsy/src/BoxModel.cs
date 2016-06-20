@@ -20,7 +20,7 @@ namespace Dropsy
             _board = board;
         }
 
-        public void AddUnplacedChip()
+        public void Advance()
         {
             if (_unplacedChip == null)
                 _unplacedChip = _chipFactory.Create(EdgeLength);
@@ -100,6 +100,16 @@ namespace Dropsy
         {
             var allChips = _board.All();
             return allChips.All(chip => chip.HasValue()) || _gameOver;
+        }
+
+        public void Halt()
+        {
+            _gameOver = true;
+        }
+
+        public bool CanReceiveInput()
+        {
+            return true;
         }
     }
 }

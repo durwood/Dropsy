@@ -58,7 +58,7 @@ namespace Dropsy.test
                 '2'
             };
             _testObj.Run();
-            Assert.That(_consoleWrapper.NumWrites, Is.EqualTo(5));
+            Assert.That(_consoleWrapper.NumWrites, Is.EqualTo(4));
         }
 
         [Test]

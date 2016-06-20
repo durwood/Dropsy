@@ -64,7 +64,7 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(1);
             _testObj.PutChipOnBoard(2);
             _testObj.PutChipOnBoard(0);
-            _testObj.AddUnplacedChip();
+            _testObj.Advance();
 
             AssertRowHasCount(0, 0);
             AssertRowHasCount(1, 1);
@@ -103,6 +103,13 @@ namespace Dropsy.test
         public void GameOverReturnsFalseWhenBoardIsFresh()
         {
             Assert.False(_testObj.GameOver());
+        }
+
+        [Test]
+        public void GameOverReturnsTrueWhenGameHalted()
+        {
+            _testObj.Halt();
+            Assert.True(_testObj.GameOver());
         }
 
         [Test]
