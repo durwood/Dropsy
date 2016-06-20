@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Dropsy.test;
 using NUnit.Framework;
 
@@ -111,7 +112,7 @@ namespace Dropsy
         }
 
         [Test]
-        public void TestA()
+        public void PopWholeRow()
         {
             var board = new BoardTestFactory(3).Create(new List<int>() {
                 0, 0, 0,
@@ -123,6 +124,18 @@ namespace Dropsy
             Assert.False(board.GetChip(2, 0).HasValue());
             Assert.False(board.GetChip(2, 1).HasValue());
             Assert.False(board.GetChip(2, 2).HasValue());
+        }
+
+        [Test]
+        public void GetPoppableChipsReturnsListOfChips()
+        {
+            var board = new BoardTestFactory(2).Create(new List<int>() {
+                0, 0,
+                1, 0
+            });
+            var result = _testObj.GetPoppableChips(board);
+            
+            Assert.That(result.First().Value, Is.EqualTo(1));
         }
     }
 }

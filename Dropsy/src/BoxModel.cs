@@ -12,6 +12,7 @@ namespace Dropsy
         private bool _gameOver;
         private int _turnCount;
         private IChip _unplacedChip;
+        private bool _canReceiveInput = true;
 
         public BoxModel(int edgeLength, IChipFactory chipFactory, Board board)
         {
@@ -64,7 +65,11 @@ namespace Dropsy
             AddBlocks();
             PutChipAtTopOfColumn(_unplacedChip, column);
 
-            new ChipPopper().PopChips(_board);
+            var chipPopper = new ChipPopper();
+            if (chipPopper.GetPoppableChips(_board).Any())
+                _canReceiveInput = false;
+
+            chipPopper.PopChips(_board);
             new ChipDropper().DropChips(_board);
 
             _unplacedChip = null;
@@ -109,7 +114,7 @@ namespace Dropsy
 
         public bool CanReceiveInput()
         {
-            return true;
+            return _canReceiveInput;
         }
     }
 }

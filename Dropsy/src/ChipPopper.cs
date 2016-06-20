@@ -6,15 +6,21 @@ namespace Dropsy
     {
         public void PopChips(Board board)
         {
-            var chipsToPop = new List<IChip>();
-            for (var i = 0; i < board.EdgeLength; i++)
-            {
-                    PopChipSet(board.GetRow(i), chipsToPop);
-                    PopChipSet(board.GetColumn(i), chipsToPop);
-            }
+            var chipsToPop = GetPoppableChips(board);
 
             foreach (var chip in chipsToPop)
                 chip.Pop();
+        }
+
+        public List<IChip> GetPoppableChips(Board board)
+        {
+            var chipsToPop = new List<IChip>();
+            for (var i = 0; i < board.EdgeLength; i++)
+            {
+                PopChipSet(board.GetRow(i), chipsToPop);
+                PopChipSet(board.GetColumn(i), chipsToPop);
+            }
+            return chipsToPop;
         }
 
         private IList<List<IChip>> Split(IList<IChip> chips)

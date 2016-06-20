@@ -207,6 +207,24 @@ namespace Dropsy.test
             AssertRowHasCount(2, 1);
             AssertRowHasCount(1, 0);
         }
+
+        [Test]
+        public void WhilePoppingCanRecieveInputIsFalse()
+        {
+            CreateTestObjWithChip(1, 2);
+
+            _testObj.PutChipOnBoard(0);
+            Assert.False(_testObj.CanReceiveInput());
+        }
+
+        [Test]
+        public void WhileNotPoppingCanRecieveInputIsTrue()
+        {
+            CreateTestObjWithChip(2, 2);
+
+            _testObj.PutChipOnBoard(0);
+            Assert.True(_testObj.CanReceiveInput());
+        }
     }
 
     public class BoardTestFactory
