@@ -37,7 +37,7 @@ namespace Dropsy
         {
             string result = "";
             foreach (var row in _rows)
-                result += row.Select(chip => chip.print() + ", ") + "\n";
+                result += row.Select(chip => chip.Print() + ", ") + "\n";
             return result;
         }
 

@@ -18,7 +18,7 @@ namespace Dropsy.test
 
         private void AssertRowHasCount(int row, int count)
         {
-            Assert.That(_testObj.GetRow(row).Count(n => n.HasValue()), Is.EqualTo(count));
+            Assert.That(_testObj.GetRow(row).Count(n => n.HasValue), Is.EqualTo(count));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Dropsy.test
             fakeChipFactory.ChipValue = 6;
             _testObj.PutChipOnBoard(0);
 
-            Assert.That(_testObj.GetRow(0).First().print(), Is.EqualTo("5"));
+            Assert.That(_testObj.GetRow(0).First().Print(), Is.EqualTo("5"));
         }
 
         private FakeChipFactory CreateTestObjWithChip(int chipValue, int edgeLength)
@@ -162,7 +162,7 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(1);
 
             AssertRowHasCount(1, 1);
-            Assert.That(_testObj.GetRow(0).Count(n => n.print() != " "), Is.EqualTo(1));
+            Assert.That(_testObj.GetRow(0).Count(n => n.Print() != " "), Is.EqualTo(1));
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace Dropsy.test
             fakeChipFactory.ChipValue = 7;
             _testObj.PutChipOnBoard(1);
 
-            Assert.That(_testObj.GetRow(1)[1].print(), Is.EqualTo("6"));
+            Assert.That(_testObj.GetRow(1)[1].Print(), Is.EqualTo("6"));
         }
 
         [Test]

@@ -25,7 +25,7 @@ namespace Dropsy.test
 
         private bool HasChipIn(int row)
         {
-            return _boxModel.GetRow(row).Count(chip => chip.HasValue()) > 0;
+            return _boxModel.GetRow(row).Count(chip => chip.HasValue) > 0;
         }
 
         [Test]

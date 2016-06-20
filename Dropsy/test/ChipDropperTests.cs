@@ -16,7 +16,7 @@ namespace Dropsy.test
             });
             new ChipDropper().DropChips(board);
 
-            Assert.True(board.GetChip(1, 1).HasValue());
+            Assert.True(board.GetChip(1, 1).HasValue);
         }
 
         [Test]
@@ -30,9 +30,9 @@ namespace Dropsy.test
             });
             new ChipDropper().DropChips(board);
 
-            Assert.True(board.GetChip(2, 2).HasValue());
-            Assert.True(board.GetChip(1, 2).HasValue());
-            Assert.False(board.GetChip(0, 2).HasValue());
+            Assert.True(board.GetChip(2, 2).HasValue);
+            Assert.True(board.GetChip(1, 2).HasValue);
+            Assert.False(board.GetChip(0, 2).HasValue);
         }
 
         [Test]
@@ -45,8 +45,8 @@ namespace Dropsy.test
             });
             new ChipDropper().DropChips(board);
 
-            Assert.True(board.GetChip(1, 1).HasValue());
-            Assert.True(board.GetChip(1, 0).HasValue());
+            Assert.True(board.GetChip(1, 1).HasValue);
+            Assert.True(board.GetChip(1, 0).HasValue);
         }
 
         [Test]
@@ -60,9 +60,9 @@ namespace Dropsy.test
             });
             new ChipDropper().DropChips(board);
 
-            Assert.True(board.GetChip(2, 2).HasValue());
-            Assert.False(board.GetChip(1, 2).HasValue());
-            Assert.False(board.GetChip(0, 2).HasValue());
+            Assert.True(board.GetChip(2, 2).HasValue);
+            Assert.False(board.GetChip(1, 2).HasValue);
+            Assert.False(board.GetChip(0, 2).HasValue);
         }
 
         [Test]
@@ -77,9 +77,9 @@ namespace Dropsy.test
             new ChipDropper().DropChips(board);
             new ChipDropper().DropChips(board);
 
-            Assert.True(board.GetChip(2, 2).HasValue());
-            Assert.True(board.GetChip(1, 2).HasValue());
-            Assert.False(board.GetChip(0, 2).HasValue());
+            Assert.True(board.GetChip(2, 2).HasValue);
+            Assert.True(board.GetChip(1, 2).HasValue);
+            Assert.False(board.GetChip(0, 2).HasValue);
         }
     }
 }

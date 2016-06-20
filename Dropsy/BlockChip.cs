@@ -2,14 +2,17 @@
 {
     public class BlockChip : IChip
     {
-        public string print()
+        public string Print()
         {
             return "█";
         }
 
-        public bool HasValue()
+        public bool HasValue
         {
-            return true;
+            get
+            {
+                return true;
+            }
         }
 
         public void Pop()
@@ -17,5 +20,9 @@
         }
 
         public int Value => -1;
+        public bool IsAnimating()
+        {
+            return false;
+        }
     }
 }

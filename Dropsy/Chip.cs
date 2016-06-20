@@ -4,11 +4,36 @@ namespace Dropsy
 {
     public class Chip : IChip
     {
-        private int _value;
+        private bool _animating;
 
         public Chip(int value)
         {
-            _value = value;
+            Value = value;
+        }
+
+        public string Print()
+        {
+            if (_animating)
+                return "*";
+
+            if (HasValue)
+                return Value.ToString();
+            return " ";
+        }
+
+        public bool HasValue => Value != 0;
+
+        public void Pop()
+        {
+            _animating = true;
+            Value = 0;
+        }
+
+        public int Value { get; private set; }
+
+        public bool IsAnimating()
+        {
+            return _animating;
         }
 
         public static IChip CreateRandom(int edgeLength)
@@ -16,22 +41,10 @@ namespace Dropsy
             return new Chip(new Random().Next(1, edgeLength));
         }
 
-        public string print()
+        public void StopAnimating()
         {
-            return HasValue() ? _value.ToString(): " ";
+            _animating = false;
         }
-
-        public bool HasValue()
-        {
-            return _value != 0;
-        }
-
-        public void Pop()
-        {
-            _value = 0;
-        }
-
-        public int Value => _value;
     }
 
     public class ChipFactory : IChipFactory

@@ -6,6 +6,29 @@ using NUnit.Framework;
 namespace Dropsy
 {
     [TestFixture]
+    public class ChipTests
+    {
+
+        [Test]
+        public void IsAnimatingIsFalseForNow()
+        {
+            var chip = new Chip(1);
+            Assert.False(chip.IsAnimating());
+        }
+
+        [Test]
+        public void IsAnimatingReturnsTrueWhenChipHasPopped()
+        {
+            var chip = new Chip(1);
+            chip.Pop();
+            Assert.True(chip.IsAnimating());
+            Assert.That(chip.Print(), Is.EqualTo("*"));
+            chip.StopAnimating();
+            Assert.That(chip.Print(), Is.EqualTo(" "));
+        }
+    }
+
+    [TestFixture]
     public class ChipPopperTests
     {
         [SetUp]
@@ -40,7 +63,7 @@ namespace Dropsy
                 {
                     board.PlaceChip(row, column, new Chip(1));
                     _testObj.PopChips(board);
-                    Assert.False(board.GetChip(row, column).HasValue());
+                    Assert.False(board.GetChip(row, column).HasValue);
                 }
             }
         }
@@ -53,7 +76,7 @@ namespace Dropsy
 
             _testObj.PopChips(board);
 
-            Assert.False(board.GetChip(0, 0).HasValue());
+            Assert.False(board.GetChip(0, 0).HasValue);
         }
 
         [Test]
@@ -64,7 +87,7 @@ namespace Dropsy
 
             foreach (var chip in board.All())
             {
-                Assert.False(chip.HasValue());
+                Assert.False(chip.HasValue);
             }
         }
 
@@ -78,8 +101,8 @@ namespace Dropsy
                 2, 0, 2
             });
             _testObj.PopChips(board);
-            Assert.True(board.GetChip(2, 0).HasValue());
-            Assert.True(board.GetChip(2, 2).HasValue());
+            Assert.True(board.GetChip(2, 0).HasValue);
+            Assert.True(board.GetChip(2, 2).HasValue);
         }
 
         [Test]
@@ -92,9 +115,9 @@ namespace Dropsy
                 2, 2, 0, 1
             });
             _testObj.PopChips(board);
-            Assert.False(board.GetChip(3, 0).HasValue());
-            Assert.False(board.GetChip(3, 1).HasValue());
-            Assert.False(board.GetChip(3, 3).HasValue());
+            Assert.False(board.GetChip(3, 0).HasValue);
+            Assert.False(board.GetChip(3, 1).HasValue);
+            Assert.False(board.GetChip(3, 3).HasValue);
         }
 
         [Test]
@@ -106,9 +129,9 @@ namespace Dropsy
                 3, -1, 3
             });
             _testObj.PopChips(board);
-            Assert.False(board.GetChip(2, 0).HasValue());
-            Assert.True(board.GetChip(2, 1).HasValue());
-            Assert.False(board.GetChip(2, 2).HasValue());
+            Assert.False(board.GetChip(2, 0).HasValue);
+            Assert.True(board.GetChip(2, 1).HasValue);
+            Assert.False(board.GetChip(2, 2).HasValue);
         }
 
         [Test]
@@ -120,10 +143,10 @@ namespace Dropsy
                 3, 3, 3
             });
             _testObj.PopChips(board);
-            Assert.True(board.GetChip(1, 0).HasValue());
-            Assert.False(board.GetChip(2, 0).HasValue());
-            Assert.False(board.GetChip(2, 1).HasValue());
-            Assert.False(board.GetChip(2, 2).HasValue());
+            Assert.True(board.GetChip(1, 0).HasValue);
+            Assert.False(board.GetChip(2, 0).HasValue);
+            Assert.False(board.GetChip(2, 1).HasValue);
+            Assert.False(board.GetChip(2, 2).HasValue);
         }
 
         [Test]
@@ -136,6 +159,18 @@ namespace Dropsy
             var result = _testObj.GetPoppableChips(board);
             
             Assert.That(result.First().Value, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void ChipsAreAnimatingReturnsTrueAfterChipsBeginToPop()
+        {
+            var board = new BoardTestFactory(2).Create(new List<int>() {
+                0, 0,
+                1, 0
+            });
+            
+            _testObj.PopChips(board);
+            Assert.True(_testObj.ChipsAreAnimating(board));
         }
     }
 }

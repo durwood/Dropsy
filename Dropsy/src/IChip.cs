@@ -2,9 +2,11 @@
 {
     public interface IChip
     {
-        string print();
-        bool HasValue();
+        string Print();
+        bool HasValue { get; }
+
         void Pop();
         int Value { get; }
+        bool IsAnimating();
     }
 }

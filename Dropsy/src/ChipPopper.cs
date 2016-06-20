@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dropsy
 {
@@ -30,7 +31,7 @@ namespace Dropsy
 
             foreach (var chip in chips)
             {
-                if (chip.HasValue())
+                if (chip.HasValue)
                     chipSet.Add(chip);
                 else
                 {
@@ -55,6 +56,22 @@ namespace Dropsy
                         chipsToPop.Add(chip);
                 }
             }
+        }
+
+        public bool ChipsAreAnimating(Board board)
+        {
+            return GetPoppableChips(board).Any() || GetAnimatingChips(board).Any();
+        }
+
+        private IList<IChip> GetAnimatingChips(Board board)
+        {
+            var chips = new List<IChip>();
+            foreach (var chip in board.All())
+            { 
+                if (chip.IsAnimating())
+                    chips.Add(chip);
+            }
+            return chips;
         }
     }
 }

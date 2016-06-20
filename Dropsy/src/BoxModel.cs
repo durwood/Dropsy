@@ -21,6 +21,11 @@ namespace Dropsy
             _board = board;
         }
 
+        public Board Board
+        {
+            get { return _board; }
+        }
+
         public void Advance()
         {
             if (_unplacedChip == null)
@@ -47,7 +52,7 @@ namespace Dropsy
 
         private void RemoveTopRow()
         {
-            _gameOver = _board.GetRow(0).Count(n => n.HasValue()) > 0;
+            _gameOver = _board.GetRow(0).Count(n => n.HasValue) > 0;
             _board.RemoveTopRow();
         }
 
@@ -59,14 +64,14 @@ namespace Dropsy
         public void PutChipInColumn(int column)
         {
             var chip = _board.GetChip(0, column);
-            if (chip.HasValue())
+            if (chip.HasValue)
                 return;
 
             AddBlocks();
             PutChipAtTopOfColumn(_unplacedChip, column);
 
             var chipPopper = new ChipPopper();
-            if (chipPopper.GetPoppableChips(_board).Any())
+            if (chipPopper.ChipsAreAnimating(_board))
                 _canReceiveInput = false;
 
             chipPopper.PopChips(_board);
@@ -83,7 +88,7 @@ namespace Dropsy
             foreach (var chip in column)
             {
                 rowIndex--;
-                if (!chip.HasValue())
+                if (!chip.HasValue)
                 {
                     _board.PlaceChip(rowIndex, columnIndex, unplacedChip);
                     break;
@@ -104,7 +109,7 @@ namespace Dropsy
         public bool GameOver()
         {
             var allChips = _board.All();
-            return allChips.All(chip => chip.HasValue()) || _gameOver;
+            return allChips.All(chip => chip.HasValue) || _gameOver;
         }
 
         public void Halt()
