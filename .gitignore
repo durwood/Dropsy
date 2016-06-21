@@ -1,0 +1,12 @@
+Dropsy/[Bb]in
+Dropsy/[Oo]bj
+Dropsy/.vs
+
+*.ilk
+*.user
+*.suo
+.*.swp
+.*.swo
+*~
+
+
