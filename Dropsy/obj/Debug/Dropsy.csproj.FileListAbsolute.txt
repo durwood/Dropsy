@@ -1,8 +1,0 @@
-C:\Users\alex\codes\Dropsy\Dropsy\bin\Debug\Dropsy.exe.config
-C:\Users\alex\codes\Dropsy\Dropsy\bin\Debug\Dropsy.exe
-C:\Users\alex\codes\Dropsy\Dropsy\bin\Debug\Dropsy.pdb
-C:\Users\alex\codes\Dropsy\Dropsy\bin\Debug\nunit.framework.dll
-C:\Users\alex\codes\Dropsy\Dropsy\bin\Debug\nunit.framework.xml
-C:\Users\alex\codes\Dropsy\Dropsy\obj\Debug\Dropsy.csprojResolveAssemblyReference.cache
-C:\Users\alex\codes\Dropsy\Dropsy\obj\Debug\Dropsy.exe
-C:\Users\alex\codes\Dropsy\Dropsy\obj\Debug\Dropsy.pdb
