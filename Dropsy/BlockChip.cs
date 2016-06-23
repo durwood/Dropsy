@@ -24,5 +24,9 @@
         {
             return false;
         }
+
+        public void StopAnimating()
+        {
+        }
     }
 }

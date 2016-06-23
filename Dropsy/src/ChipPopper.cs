@@ -1,17 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Dropsy
 {
-    public class ChipPopper
+    public abstract class ChipFinder
     {
-        public void PopChips(Board board)
-        {
-            var chipsToPop = GetPoppableChips(board);
-
-            foreach (var chip in chipsToPop)
-                chip.Pop();
-        }
+        public abstract void Go(Board board);
+        public abstract bool HasPendingChips(Board board);
 
         public List<IChip> GetPoppableChips(Board board)
         {
@@ -22,6 +18,17 @@ namespace Dropsy
                 PopChipSet(board.GetColumn(i), chipsToPop);
             }
             return chipsToPop;
+        }
+        private void PopChipSet(IList<IChip> chipSet, IList<IChip> chipsToPop)
+        {
+            foreach (var chips in Split(chipSet))
+            {
+                foreach (var chip in chips)
+                {
+                    if (chip.Value == chips.Count)
+                        chipsToPop.Add(chip);
+                }
+            }
         }
 
         private IList<List<IChip>> Split(IList<IChip> chips)
@@ -45,33 +52,48 @@ namespace Dropsy
 
             return chipSets;
         }
+    }
 
-        private void PopChipSet(IList<IChip> chipSet, IList<IChip> chipsToPop)
+    public class ChipSweeper : ChipFinder
+    {
+        public override void Go(Board board)
         {
-            foreach (var chips in Split(chipSet))
-            {
-                foreach (var chip in chips)
-                {
-                    if (chip.Value == chips.Count)
-                        chipsToPop.Add(chip);
-                }
-            }
+            var chipsToPop = GetAnimatingChips(board);
+
+            foreach (var chip in chipsToPop)
+                chip.StopAnimating();
         }
 
-        public bool ChipsAreAnimating(Board board)
+        public override bool HasPendingChips(Board board)
         {
-            return GetPoppableChips(board).Any() || GetAnimatingChips(board).Any();
+            return GetAnimatingChips(board).Any();
         }
 
         private IList<IChip> GetAnimatingChips(Board board)
         {
             var chips = new List<IChip>();
             foreach (var chip in board.All())
-            { 
+            {
                 if (chip.IsAnimating())
                     chips.Add(chip);
             }
             return chips;
+        }
+    }
+    public class ChipPopper : ChipFinder
+    {
+        public override void Go(Board board)
+        {
+            var chipsToPop = GetPoppableChips(board);
+
+            foreach (var chip in chipsToPop)
+                chip.Pop();
+        }
+
+
+        public override bool HasPendingChips(Board board)
+        {
+            return GetPoppableChips(board).Any();
         }
     }
 }

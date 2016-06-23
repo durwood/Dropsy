@@ -29,6 +29,42 @@ namespace Dropsy
     }
 
     [TestFixture]
+    public class ChipAnimatorTests
+    {
+        [SetUp]
+        public void Setup()
+        {
+            _testObj = new ChipSweeper();
+        }
+
+        private ChipSweeper _testObj;
+
+        [Test]
+        public void ChipsAreAnimatingReturnsTrueAfterChipsBeginToPop()
+        {
+            var board = new BoardTestFactory(2).Create(new List<int>() {
+                0, 0,
+                1, 0
+            });
+
+            new ChipPopper().Go(board);
+            Assert.True(_testObj.HasPendingChips(board));
+        }
+
+        [Test]
+        public void ChipsAreAnimatingReturnsFalseAfterSweeping()
+        {
+            var board = new BoardTestFactory(2).Create(new List<int>() {
+                0, 0,
+                1, 0
+            });
+
+           _testObj.Go(board);
+            Assert.False(_testObj.HasPendingChips(board));
+        }
+    }
+
+    [TestFixture]
     public class ChipPopperTests
     {
         [SetUp]
@@ -44,7 +80,7 @@ namespace Dropsy
         public void ChipOfValueOneCanNotPop()
         {
             var board = new BoardTestFactory(2).Create(new List<int> {1, 1, 1, 1});
-            _testObj.PopChips(board);
+            _testObj.Go(board);
 
             foreach (var chip in board.All())
             {
@@ -62,7 +98,7 @@ namespace Dropsy
                 for (var column = 0; column < 3; column++)
                 {
                     board.PlaceChip(row, column, new Chip(1));
-                    _testObj.PopChips(board);
+                    _testObj.Go(board);
                     Assert.False(board.GetChip(row, column).HasValue);
                 }
             }
@@ -74,7 +110,7 @@ namespace Dropsy
             var board = new Board(1);
             board.PlaceChip(0, 0, new Chip(1));
 
-            _testObj.PopChips(board);
+            _testObj.Go(board);
 
             Assert.False(board.GetChip(0, 0).HasValue);
         }
@@ -83,7 +119,7 @@ namespace Dropsy
         public void ChipsPopInBothRowAndColumn()
         {
             var board = new BoardTestFactory(2).Create(new List<int>() {2, 2, 2, 2});
-            _testObj.PopChips(board);
+            _testObj.Go(board);
 
             foreach (var chip in board.All())
             {
@@ -100,7 +136,7 @@ namespace Dropsy
                 0, 0, 0,
                 2, 0, 2
             });
-            _testObj.PopChips(board);
+            _testObj.Go(board);
             Assert.True(board.GetChip(2, 0).HasValue);
             Assert.True(board.GetChip(2, 2).HasValue);
         }
@@ -114,7 +150,7 @@ namespace Dropsy
                 0, 0, 0, 0,
                 2, 2, 0, 1
             });
-            _testObj.PopChips(board);
+            _testObj.Go(board);
             Assert.False(board.GetChip(3, 0).HasValue);
             Assert.False(board.GetChip(3, 1).HasValue);
             Assert.False(board.GetChip(3, 3).HasValue);
@@ -128,7 +164,7 @@ namespace Dropsy
                 0, 0, 0, 
                 3, -1, 3
             });
-            _testObj.PopChips(board);
+            _testObj.Go(board);
             Assert.False(board.GetChip(2, 0).HasValue);
             Assert.True(board.GetChip(2, 1).HasValue);
             Assert.False(board.GetChip(2, 2).HasValue);
@@ -142,7 +178,7 @@ namespace Dropsy
                 3, 0, 0,
                 3, 3, 3
             });
-            _testObj.PopChips(board);
+            _testObj.Go(board);
             Assert.True(board.GetChip(1, 0).HasValue);
             Assert.False(board.GetChip(2, 0).HasValue);
             Assert.False(board.GetChip(2, 1).HasValue);
@@ -159,18 +195,6 @@ namespace Dropsy
             var result = _testObj.GetPoppableChips(board);
             
             Assert.That(result.First().Value, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void ChipsAreAnimatingReturnsTrueAfterChipsBeginToPop()
-        {
-            var board = new BoardTestFactory(2).Create(new List<int>() {
-                0, 0,
-                1, 0
-            });
-            
-            _testObj.PopChips(board);
-            Assert.True(_testObj.ChipsAreAnimating(board));
         }
     }
 }
