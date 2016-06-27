@@ -7,6 +7,11 @@
             return "█";
         }
 
+        public bool HasVolume()
+        {
+            return true;
+        }
+
         public bool HasValue
         {
             get

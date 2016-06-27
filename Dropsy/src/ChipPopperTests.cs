@@ -6,65 +6,6 @@ using NUnit.Framework;
 namespace Dropsy
 {
     [TestFixture]
-    public class ChipTests
-    {
-
-        [Test]
-        public void IsAnimatingIsFalseForNow()
-        {
-            var chip = new Chip(1);
-            Assert.False(chip.IsAnimating());
-        }
-
-        [Test]
-        public void IsAnimatingReturnsTrueWhenChipHasPopped()
-        {
-            var chip = new Chip(1);
-            chip.Pop();
-            Assert.True(chip.IsAnimating());
-            Assert.That(chip.Print(), Is.EqualTo("*"));
-            chip.StopAnimating();
-            Assert.That(chip.Print(), Is.EqualTo(" "));
-        }
-    }
-
-    [TestFixture]
-    public class ChipAnimatorTests
-    {
-        [SetUp]
-        public void Setup()
-        {
-            _testObj = new ChipSweeper();
-        }
-
-        private ChipSweeper _testObj;
-
-        [Test]
-        public void ChipsAreAnimatingReturnsTrueAfterChipsBeginToPop()
-        {
-            var board = new BoardTestFactory(2).Create(new List<int>() {
-                0, 0,
-                1, 0
-            });
-
-            new ChipPopper().Go(board);
-            Assert.True(_testObj.HasPendingChips(board));
-        }
-
-        [Test]
-        public void ChipsAreAnimatingReturnsFalseAfterSweeping()
-        {
-            var board = new BoardTestFactory(2).Create(new List<int>() {
-                0, 0,
-                1, 0
-            });
-
-           _testObj.Go(board);
-            Assert.False(_testObj.HasPendingChips(board));
-        }
-    }
-
-    [TestFixture]
     public class ChipPopperTests
     {
         [SetUp]

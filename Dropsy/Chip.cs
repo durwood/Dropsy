@@ -21,12 +21,17 @@ namespace Dropsy
             return " ";
         }
 
+        public bool HasVolume()
+        {
+            return _animating || HasValue;
+        }
+
         public bool HasValue => Value != 0;
 
         public void Pop()
         {
-            _animating = true;
             Value = 0;
+            _animating = true;
         }
 
         public int Value { get; private set; }

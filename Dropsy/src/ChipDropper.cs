@@ -9,7 +9,7 @@ namespace Dropsy
         {
             for (var columnIndex =0; columnIndex<board.EdgeLength; columnIndex++)
             {
-                board.SetColumn(columnIndex, board.GetColumn(columnIndex).Where(chip => chip.HasValue).Reverse().ToList());
+                board.SetColumn(columnIndex, board.GetColumn(columnIndex).Where(chip => chip.HasVolume()).Reverse().ToList());
             }
 
         }

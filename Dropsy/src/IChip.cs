@@ -3,6 +3,7 @@
     public interface IChip
     {
         string Print();
+        bool HasVolume();
         bool HasValue { get; }
 
         void Pop();

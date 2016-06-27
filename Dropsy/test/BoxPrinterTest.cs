@@ -172,6 +172,26 @@ namespace Dropsy.test
 
             AssertSizeIsCorrect(_edgeLength, expected);
         }
+
+        [Test]
+        public void ChipsThatArePoppedLookLikeStar()
+        {
+            _edgeLength = 2;
+            CreateTestObj(_edgeLength);
+            var expected = "";
+
+            _fakeChipFactory.ChipValue = 1;
+            _model.PutChipOnBoard(1);
+
+            expected += "\n";
+            expected += "┌──────┐\n";
+            expected += "│      │\n";
+            expected += "│    * │\n";
+            expected += "└──────┘\n";
+            expected += "  1  2  \n";
+
+            AssertSizeIsCorrect(_edgeLength, expected);
+        }
     }
 
     public class FakeChipFactory : IChipFactory

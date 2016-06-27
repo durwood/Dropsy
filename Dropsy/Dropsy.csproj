@@ -56,6 +56,8 @@
     <Compile Include="src\ChipDropper.cs" />
     <Compile Include="src\ChipPopper.cs" />
     <Compile Include="src\ChipPopperTests.cs" />
+    <Compile Include="src\ChipSweeperTests.cs" />
+    <Compile Include="src\ChipTests.cs" />
     <Compile Include="src\ConsoleWrapper.cs" />
     <Compile Include="src\IChip.cs" />
     <Compile Include="src\IConsoleWrapper.cs" />
