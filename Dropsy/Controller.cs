@@ -1,4 +1,6 @@
-﻿namespace Dropsy
+﻿using System.Threading;
+
+namespace Dropsy
 {
     public class Controller
     {
@@ -19,6 +21,8 @@
                 Print();
                 if (_model.CanReceiveInput())
                     GetInput();
+                else
+                    Thread.Sleep(500);
             } while (!_model.GameOver());
         }
 

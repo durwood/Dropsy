@@ -182,8 +182,9 @@ namespace Dropsy.test
 
             _fakeChipFactory.ChipValue = 1;
             _model.PutChipOnBoard(1);
+            _model.Advance();
 
-            expected += "\n";
+            expected += "    1   \n";
             expected += "┌──────┐\n";
             expected += "│      │\n";
             expected += "│    * │\n";

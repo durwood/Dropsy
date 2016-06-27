@@ -77,6 +77,7 @@ namespace Dropsy.test
             var fakeChipFactory = new FakeChipFactory {ChipValue = 1};
             _testObj = new BoxModel(1, fakeChipFactory, new Board(1));
             _testObj.PutChipOnBoard(0);
+            _testObj.Advance();
             Assert.False(_testObj.GameOver());
         }
 
@@ -203,6 +204,8 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(0);
             _testObj.PutChipOnBoard(1);
             _testObj.PutChipOnBoard(2);
+            _testObj.Advance();
+            _testObj.Advance();
 
             AssertRowHasCount(2, 1);
             AssertRowHasCount(1, 0);
@@ -214,6 +217,7 @@ namespace Dropsy.test
             CreateTestObjWithChip(1, 2);
 
             _testObj.PutChipOnBoard(0);
+            _testObj.Advance();
             Assert.False(_testObj.CanReceiveInput());
         }
 

@@ -32,14 +32,14 @@ namespace Dropsy
                 _unplacedChip = _chipFactory.Create(EdgeLength);
 
             var chipPopper = new ChipPopper();
-            //var chipSweeper = new ChipSweeper();
-            if (chipPopper.HasPendingChips(_board) )//|| chipSweeper.HasPendingChips(_board))
+            var chipSweeper = new ChipSweeper();
+            if (chipPopper.HasPendingChips(_board) )
                 _canReceiveInput = false;
             else
                 _canReceiveInput = true;
 
+            chipSweeper.Go(_board);
             chipPopper.Go(_board);
-            //chipSweeper.Go(_board);
             new ChipDropper().DropChips(_board);
 
         }
@@ -81,8 +81,6 @@ namespace Dropsy
 
             AddBlocks();
             PutChipAtTopOfColumn(_unplacedChip, column);
-
-            Advance();
 
             _unplacedChip = null;
         }
