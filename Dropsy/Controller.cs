@@ -33,6 +33,8 @@ namespace Dropsy
                 _model.Halt();
             else
                 _model.PutChipInColumn(GetSelectedColumn(input));
+            Print();
+            Thread.Sleep(500);
         }
 
         private void Print()

@@ -13,6 +13,8 @@ namespace Dropsy
 
         public string Print()
         {
+
+
             if (_animating)
                 return "*";
 
