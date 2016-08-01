@@ -11,10 +11,13 @@ namespace Dropsy
             Value = value;
         }
 
+        public override string ToString()
+        {
+            return Print();
+        }
+
         public string Print()
         {
-
-
             if (_animating)
                 return "*";
 

@@ -2,6 +2,11 @@
 {
     public class BlockChip : IChip
     {
+        public override string ToString()
+        {
+            return Print();
+        }
+
         public string Print()
         {
             return "█";

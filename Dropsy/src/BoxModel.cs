@@ -33,15 +33,15 @@ namespace Dropsy
 
             var chipPopper = new ChipPopper();
             var chipSweeper = new ChipSweeper();
-            if (chipPopper.HasPendingChips(_board) )
+            var chipDropper = new ChipDropper();
+            if (chipPopper.HasPendingChips(_board) || chipSweeper.HasPendingChips(_board))
                 _canReceiveInput = false;
             else
                 _canReceiveInput = true;
 
+            chipDropper.DropChips(_board);
             chipSweeper.Go(_board);
             chipPopper.Go(_board);
-            new ChipDropper().DropChips(_board);
-
         }
 
         private void AddBlocks()

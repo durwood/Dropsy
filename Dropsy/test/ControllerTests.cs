@@ -34,7 +34,7 @@ namespace Dropsy.test
             _consoleWrapper.NextChar = new[] {'1', 'q'};
             _testObj.Run();
 
-            Assert.That(_consoleWrapper.NumWrites, Is.EqualTo(2));
+            Assert.That(_consoleWrapper.NumWrites, Is.EqualTo(4));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Dropsy.test
                 '2'
             };
             _testObj.Run();
-            Assert.That(_consoleWrapper.NumWrites, Is.EqualTo(4));
+            Assert.That(_consoleWrapper.NumWrites, Is.EqualTo(8));
         }
 
         [Test]

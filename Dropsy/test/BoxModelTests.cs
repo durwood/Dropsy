@@ -206,6 +206,7 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(2);
             _testObj.Advance();
             _testObj.Advance();
+            _testObj.Advance();
 
             AssertRowHasCount(2, 1);
             AssertRowHasCount(1, 0);
@@ -219,6 +220,20 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(0);
             _testObj.Advance();
             Assert.False(_testObj.CanReceiveInput());
+        }
+
+        [Test]
+        public void AnimatingCanRecieveInputIsFalse()
+        {
+            CreateTestObjWithChip(1, 2);
+
+            _testObj.PutChipOnBoard(0);
+            _testObj.Advance();
+            Assert.False(_testObj.CanReceiveInput());
+            _testObj.Advance();
+            Assert.False(_testObj.CanReceiveInput());
+            _testObj.Advance();
+            Assert.True(_testObj.CanReceiveInput());
         }
 
         [Test]
