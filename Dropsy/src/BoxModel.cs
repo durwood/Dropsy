@@ -6,25 +6,21 @@ namespace Dropsy
     public class BoxModel
     {
         private const int TurnsBettweenBlocks = 5;
-        private readonly Board _board;
         private readonly IChipFactory _chipFactory;
         public readonly int EdgeLength;
+        private bool _canReceiveInput = true;
         private bool _gameOver;
         private int _turnCount;
         private IChip _unplacedChip;
-        private bool _canReceiveInput = true;
 
         public BoxModel(int edgeLength, IChipFactory chipFactory, Board board)
         {
             EdgeLength = edgeLength;
             _chipFactory = chipFactory;
-            _board = board;
+            Board = board;
         }
 
-        public Board Board
-        {
-            get { return _board; }
-        }
+        public Board Board { get; }
 
         public void Advance()
         {
@@ -34,14 +30,25 @@ namespace Dropsy
             var chipPopper = new ChipPopper();
             var chipSweeper = new ChipSweeper();
             var chipDropper = new ChipDropper();
-            if (chipPopper.HasPendingChips(_board) || chipSweeper.HasPendingChips(_board))
+
+            if (chipSweeper.HasPendingChips(Board))
+            {
+                chipSweeper.Go(Board);
                 _canReceiveInput = false;
+            }
+            else if (chipDropper.HasPendingChips(Board))
+            {
+                chipDropper.Go(Board);
+                _canReceiveInput = false;
+            }
+            else if (chipPopper.HasPendingChips(Board))
+            {
+                chipPopper.Go(Board);
+                _canReceiveInput = false;
+            }
+
             else
                 _canReceiveInput = true;
-
-            chipDropper.DropChips(_board);
-            chipSweeper.Go(_board);
-            chipPopper.Go(_board);
         }
 
         private void AddBlocks()
@@ -59,13 +66,13 @@ namespace Dropsy
         private void AddBlocksToBottomRow()
         {
             RemoveTopRow();
-            _board.AddChipsToBottom(new BlockChip());
+            Board.AddChipsToBottom(new BlockChip());
         }
 
         private void RemoveTopRow()
         {
-            _gameOver = _board.GetRow(0).Count(n => n.HasValue) > 0;
-            _board.RemoveTopRow();
+            _gameOver = Board.GetRow(0).Count(n => n.HasValue) > 0;
+            Board.RemoveTopRow();
         }
 
         public IChip GetUnplacedChip()
@@ -75,7 +82,7 @@ namespace Dropsy
 
         public void PutChipInColumn(int column)
         {
-            var chip = _board.GetChip(0, column);
+            var chip = Board.GetChip(0, column);
             if (chip.HasValue)
                 return;
 
@@ -87,7 +94,7 @@ namespace Dropsy
 
         private void PutChipAtTopOfColumn(IChip unplacedChip, int columnIndex)
         {
-            var column = _board.GetColumn(columnIndex);
+            var column = Board.GetColumn(columnIndex);
             column.Reverse();
             var rowIndex = EdgeLength;
             foreach (var chip in column)
@@ -95,7 +102,7 @@ namespace Dropsy
                 rowIndex--;
                 if (!chip.HasValue)
                 {
-                    _board.PlaceChip(rowIndex, columnIndex, unplacedChip);
+                    Board.PlaceChip(rowIndex, columnIndex, unplacedChip);
                     break;
                 }
             }
@@ -108,12 +115,12 @@ namespace Dropsy
 
         public List<IChip> GetRow(int row)
         {
-            return _board.GetRow(row);
+            return Board.GetRow(row);
         }
 
         public bool GameOver()
         {
-            var allChips = _board.All();
+            var allChips = Board.All();
             return allChips.All(chip => chip.HasValue) || _gameOver;
         }
 

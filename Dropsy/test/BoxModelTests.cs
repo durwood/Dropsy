@@ -10,11 +10,12 @@ namespace Dropsy.test
         [SetUp]
         public void Setup()
         {
-            var chipFactory = new UnpoppableChipFactory();
-            _testObj = new BoxModel(3, chipFactory, new Board(3));
+            _chipFactory = new UnpoppableChipFactory();
+            _testObj = new BoxModel(3, _chipFactory, new Board(3));
         }
 
         private BoxModel _testObj;
+        private UnpoppableChipFactory _chipFactory;
 
         private void AssertRowHasCount(int row, int count)
         {
@@ -204,12 +205,23 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(0);
             _testObj.PutChipOnBoard(1);
             _testObj.PutChipOnBoard(2);
-            _testObj.Advance();
-            _testObj.Advance();
-            _testObj.Advance();
+
+            var steps = AdvanceTillDone(_testObj);
 
             AssertRowHasCount(2, 1);
             AssertRowHasCount(1, 0);
+            Assert.That(steps, Is.EqualTo(4));
+        }
+
+        private int AdvanceTillDone(BoxModel model)
+        {
+            var steps = 0;
+            do
+            {
+                steps++;
+                model.Advance();
+            } while (!model.CanReceiveInput());
+            return steps;
         }
 
         [Test]
@@ -243,6 +255,22 @@ namespace Dropsy.test
 
             _testObj.PutChipOnBoard(0);
             Assert.True(_testObj.CanReceiveInput());
+        }
+
+
+        [Test]
+        public void CascadingMultiplePops()
+        {
+            var board = new BoardTestFactory(3).Create(new List<int>()
+            {
+                2, 0, 0,
+                3, 0, 0,
+                -1, 0, 0
+            });
+            _testObj = new BoxModel(3, _chipFactory, board);
+
+            var steps = AdvanceTillDone(_testObj);
+            Assert.That(steps, Is.EqualTo(6));
         }
     }
 
