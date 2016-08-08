@@ -4,10 +4,14 @@ using System.Linq;
 
 namespace Dropsy
 {
+    interface IChipHandler
+    {
+        bool Go(Board board);
+        bool HasPendingChips(Board board);
+    }
+
     public abstract class ChipFinder
     {
-        public abstract void Go(Board board);
-        public abstract bool HasPendingChips(Board board);
 
         public List<IChip> GetPoppableChips(Board board)
         {
@@ -54,17 +58,18 @@ namespace Dropsy
         }
     }
 
-    public class ChipSweeper : ChipFinder
+    public class ChipSweeper : ChipFinder, IChipHandler
     {
-        public override void Go(Board board)
+        public bool Go(Board board)
         {
             var chipsToPop = GetAnimatingChips(board);
 
             foreach (var chip in chipsToPop)
                 chip.StopAnimating();
+            return false;
         }
 
-        public override bool HasPendingChips(Board board)
+        public bool HasPendingChips(Board board)
         {
             return GetAnimatingChips(board).Any();
         }
@@ -80,18 +85,20 @@ namespace Dropsy
             return chips;
         }
     }
-    public class ChipPopper : ChipFinder
+    public class ChipPopper : ChipFinder, IChipHandler
     {
-        public override void Go(Board board)
+        public bool Go(Board board)
         {
             var chipsToPop = GetPoppableChips(board);
 
             foreach (var chip in chipsToPop)
                 chip.Pop();
+
+            return false;
         }
 
 
-        public override bool HasPendingChips(Board board)
+        public bool HasPendingChips(Board board)
         {
             return GetPoppableChips(board).Any();
         }

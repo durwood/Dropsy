@@ -10,14 +10,19 @@ namespace Dropsy
         private bool _canReceiveInput = true;
         private bool _gameOver;
         private IChip _unplacedChip;
-        private readonly BlockAdder _blockAdder;
+
+        private List<IChipHandler> _chipHandlers = new List<IChipHandler>();
+        private BlockAdder _blockAdder = new BlockAdder();
 
         public BoxModel(int edgeLength, IChipFactory chipFactory, Board board)
         {
             EdgeLength = edgeLength;
             _chipFactory = chipFactory;
             Board = board;
-            _blockAdder = new BlockAdder(Board);
+            _chipHandlers.Add(new ChipPopper());
+            _chipHandlers.Add(new ChipSweeper());
+            _chipHandlers.Add(new ChipDropper());
+            _chipHandlers.Add(_blockAdder);
         }
 
         public Board Board { get; }
@@ -27,33 +32,18 @@ namespace Dropsy
             if (_unplacedChip == null)
                 _unplacedChip = _chipFactory.Create(EdgeLength);
 
-            var chipPopper = new ChipPopper();
-            var chipSweeper = new ChipSweeper();
-            var chipDropper = new ChipDropper();
-
-            if (chipSweeper.HasPendingChips(Board))
+            _canReceiveInput = true;
+            foreach (var chipHandler in _chipHandlers)
             {
-                chipSweeper.Go(Board);
-                _canReceiveInput = false;
+                if (chipHandler.HasPendingChips(Board))
+                {
+                    _gameOver = chipHandler.Go(Board);
+                    _canReceiveInput = false;
+                    break;
+                }
             }
-            else if (chipDropper.HasPendingChips(Board))
-            {
-                chipDropper.Go(Board);
-                _canReceiveInput = false;
-            }
-            else if (chipPopper.HasPendingChips(Board))
-            {
-                chipPopper.Go(Board);
-                _canReceiveInput = false;
-            }
-            else if(_blockAdder.IsTurnToAddBlocks())
-            {
-                _gameOver = _blockAdder.AddBlocks();
-                _canReceiveInput = false;
-            }
-            else
-                _canReceiveInput = true;
         }
+
 
         public IChip GetUnplacedChip()
         {

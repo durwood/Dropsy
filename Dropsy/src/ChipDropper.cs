@@ -3,15 +3,16 @@ using System.Linq;
 
 namespace Dropsy
 {
-    public class ChipDropper
+    public class ChipDropper : IChipHandler
     {
-        public void Go(Board board)
+        public bool Go(Board board)
         {
             for (var columnIndex = 0; columnIndex < board.EdgeLength; columnIndex++)
             {
                 board.SetColumn(columnIndex,
                     board.GetColumn(columnIndex).Where(chip => chip.HasVolume()).Reverse().ToList());
             }
+            return false;
         }
 
         public bool HasPendingChips(Board board)
