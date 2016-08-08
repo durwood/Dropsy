@@ -50,6 +50,7 @@
     <Compile Include="Controller.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\BlockAdder.cs" />
     <Compile Include="src\Board.cs" />
     <Compile Include="src\BoxModel.cs" />
     <Compile Include="src\BoxPrinter.cs" />

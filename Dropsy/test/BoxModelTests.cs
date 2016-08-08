@@ -30,6 +30,7 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(2);
             _testObj.PutChipOnBoard(0);
             _testObj.PutChipOnBoard(1);
+            _testObj.Advance();
 
             AssertRowHasCount(0, 2);
             AssertRowHasCount(1, 3);
@@ -51,6 +52,7 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(2);
             _testObj.PutChipOnBoard(3);
             _testObj.PutChipOnBoard(4);
+            _testObj.Advance();
 
             AssertRowHasCount(6, 7);
             AssertRowHasCount(5, 7);
@@ -140,6 +142,7 @@ namespace Dropsy.test
             _testObj.PutChipOnBoard(0);
             _testObj.PutChipOnBoard(1);
             _testObj.PutChipOnBoard(1);
+            _testObj.Advance();
             Assert.True(_testObj.GameOver());
         }
 

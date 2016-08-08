@@ -5,19 +5,19 @@ namespace Dropsy
 {
     public class BoxModel
     {
-        private const int TurnsBettweenBlocks = 5;
         private readonly IChipFactory _chipFactory;
         public readonly int EdgeLength;
         private bool _canReceiveInput = true;
         private bool _gameOver;
-        private int _turnCount;
         private IChip _unplacedChip;
+        private readonly BlockAdder _blockAdder;
 
         public BoxModel(int edgeLength, IChipFactory chipFactory, Board board)
         {
             EdgeLength = edgeLength;
             _chipFactory = chipFactory;
             Board = board;
+            _blockAdder = new BlockAdder(Board);
         }
 
         public Board Board { get; }
@@ -46,33 +46,13 @@ namespace Dropsy
                 chipPopper.Go(Board);
                 _canReceiveInput = false;
             }
-
+            else if(_blockAdder.IsTurnToAddBlocks())
+            {
+                _gameOver = _blockAdder.AddBlocks();
+                _canReceiveInput = false;
+            }
             else
                 _canReceiveInput = true;
-        }
-
-        private void AddBlocks()
-        {
-            _turnCount++;
-            if (IsTurnToAddBlocks())
-                AddBlocksToBottomRow();
-        }
-
-        private bool IsTurnToAddBlocks()
-        {
-            return _turnCount%TurnsBettweenBlocks == 0;
-        }
-
-        private void AddBlocksToBottomRow()
-        {
-            RemoveTopRow();
-            Board.AddChipsToBottom(new BlockChip());
-        }
-
-        private void RemoveTopRow()
-        {
-            _gameOver = Board.GetRow(0).Count(n => n.HasValue) > 0;
-            Board.RemoveTopRow();
         }
 
         public IChip GetUnplacedChip()
@@ -86,7 +66,7 @@ namespace Dropsy
             if (chip.HasValue)
                 return;
 
-            AddBlocks();
+            _blockAdder.TakeTurn();
             PutChipAtTopOfColumn(_unplacedChip, column);
 
             _unplacedChip = null;

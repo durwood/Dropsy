@@ -161,8 +161,9 @@ namespace Dropsy.test
             _model.PutChipOnBoard(1);
             _model.PutChipOnBoard(0);
             _model.PutChipOnBoard(0);
+            _model.Advance();
 
-            expected += "\n";
+            expected += "     5     \n";
             expected += "┌─────────┐\n";
             expected += "│ 5  5    │\n";
             expected += "│ 5  5  5 │\n";
